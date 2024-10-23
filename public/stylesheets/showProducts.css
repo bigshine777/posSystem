@@ -1,0 +1,41 @@
+/* セクションタイトルのスタイル */
+.section-title {
+    font-weight: bold;
+    font-size: 1.8rem;
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* 商品カードのスタイル */
+.product-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* カードのホバーエフェクト */
+.product-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 価格テキストのスタイル */
+.price-text {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ff6347;
+    margin-bottom: 15px;
+}
+
+/* ボタンの調整 */
+.btn-success {
+    border-radius: 20px;
+}
+
+/* カード内の要素の間隔を統一 */
+.card-body h5 {
+    margin-bottom: 10px;
+}

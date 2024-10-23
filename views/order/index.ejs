@@ -1,0 +1,56 @@
+<% layout('layouts/base') %>
+
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-8 mt-5">
+      <h3>現在受付中のオーダー</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">商品名</th>
+            <th scope="col">注文卓</th>
+            <th scope="col">注文時間</th>
+            <th scope="col">価格</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for( let index = 0; index < currentOrders.length; index++ ) { %>
+          <tr>
+            <th scope="row"><%= index %></th>
+            <td><%= currentOrders[0].product.price %></td>
+            <td><%= currentOrders[0].orderedBy %></td>
+            <td><%= currentOrders[0].createdAt %></td>
+            <td><%= currentOrders[0].product.price %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-8 mt-5">
+        <h3>お届け済みのオーダー</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">商品名</th>
+              <th scope="col">注文卓</th>
+              <th scope="col">注文時間</th>
+              <th scope="col">価格</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for( let index = 0; index < Orders.length; index++ ) { %>
+            <tr>
+              <th scope="row"><%= index %></th>
+              <td><%= currentOrders[0].product.price %></td>
+              <td><%= currentOrders[0].orderedBy %></td>
+              <td><%= currentOrders[0].createdAt %></td>
+              <td><%= currentOrders[0].product.price %></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
