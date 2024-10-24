@@ -18,7 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect('mongodb://localhost:27017/posSystem')
+const dbURI = 'mongodb+srv://bigshine777:OqGyHrNh4oimSJhX@possystem.5kzge.mongodb.net/?retryWrites=true&w=majority&appName=PosSystem'
+
+mongoose.connect(dbURI)
     .then(() => {
         console.log('コネクションOK');
     })
