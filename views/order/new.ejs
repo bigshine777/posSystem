@@ -3,6 +3,7 @@
 <div class="container pb-5">
   <div class="row d-flex justify-content-center">
     <div class="col-lg-9 col-md-10 col-12">
+      <!-- 料理セクション -->
       <div class="mb-5">
         <h3 class="section-title">料理</h3>
         <% if (foodProducts.length) { %>
@@ -13,7 +14,13 @@
               <div class="card-body text-center">
                 <h5 class="card-title"><%= foodProduct.name %></h5>
                 <p class="card-text price-text">¥ <%= foodProduct.price %></p>
-                <a href="/product/<%= foodProduct._id %>" class="btn btn-success">編集</a>
+
+                <div class="quantity-controller">
+                  <button class="minus-btn btn btn-sm btn-outline-secondary">-</button>
+                  <span class="quantity">0</span>
+                  <button class="plus-btn btn btn-sm btn-outline-secondary">+</button>
+                </div>
+
               </div>
             </div>
           </div>
@@ -22,6 +29,7 @@
         <% } %>
       </div>
 
+      <!-- ドリンクセクション -->
       <div class="mb-5">
         <h3 class="section-title">ドリンク</h3>
         <% if (drinkProducts.length) { %>
@@ -32,7 +40,13 @@
               <div class="card-body text-center">
                 <h5 class="card-title"><%= drinkProduct.name %></h5>
                 <p class="card-text price-text">¥ <%= drinkProduct.price %></p>
-                <a href="/product/<%= drinkProduct._id %>" class="btn btn-success">編集</a>
+
+                <div class="quantity-controller">
+                  <button class="minus-btn btn btn-sm btn-outline-secondary">-</button>
+                  <span class="quantity">0</span>
+                  <button class="plus-btn btn btn-sm btn-outline-secondary">+</button>
+                </div>
+
               </div>
             </div>
           </div>
@@ -41,6 +55,7 @@
         <% } %>
       </div>
 
+      <!-- その他セクション -->
       <div class="mb-5">
         <h3 class="section-title">その他</h3>
         <% if (otherProducts.length) { %>
@@ -51,7 +66,13 @@
               <div class="card-body text-center">
                 <h5 class="card-title"><%= otherProduct.name %></h5>
                 <p class="card-text price-text">¥ <%= otherProduct.price %></p>
-                <a href="/product/<%= otherProduct._id %>" class="btn btn-success">編集</a>
+
+                <div class="quantity-controller">
+                  <button class="minus-btn btn btn-sm btn-outline-secondary">-</button>
+                  <span class="quantity">0</span>
+                  <button class="plus-btn btn btn-sm btn-outline-secondary">+</button>
+                </div>
+
               </div>
             </div>
           </div>
@@ -59,8 +80,15 @@
         </div>
         <% } %>
       </div>
+      
+      <button class="btn btn-danger" id="confirmOrderBtn">注文の確認</button>
+
     </div>
   </div>
 </div>
 
-<link rel="stylesheet" href="stylesheets/showProducts.css">
+<!-- CSSの読み込み -->
+<link rel="stylesheet" href="/stylesheets/createOrder.css">
+
+<!-- JavaScriptの読み込み -->
+<script src="/js/createOrder.js"></script>

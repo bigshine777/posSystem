@@ -16,11 +16,6 @@
     overflow: hidden;
 }
 
-/* カードのホバーエフェクト */
-.product-card:hover {
-    transform: scale(1.05);
-}
-
 /* 価格テキストのスタイル */
 .price-text {
     font-size: 1.4rem;
@@ -37,4 +32,39 @@
 /* カード内の要素の間隔を統一 */
 .card-body h5 {
     margin-bottom: 10px;
+}
+
+/* オーダーの量の管理 */
+.quantity-controller {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quantity {
+    min-width: 30px;
+    text-align: center;
+    font-size: calc(1.3rem + 0.8vw);
+}
+
+
+/* ボタンのスタイル */
+.minus-btn,
+.plus-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    padding-top: 0;
+    justify-content: center;
+    font-size: 1.8rem;
+    /* フォントサイズを拡大 */
+    font-weight: bold;
+    line-height: 1;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    transition: background-color 0.2s;
 }
