@@ -1,3 +1,66 @@
-<% layout('layouts/base') %>
+<% layout('layouts/base.ejs') %>
 
-new
+<div class="container pb-5">
+  <div class="row d-flex justify-content-center">
+    <div class="col-lg-9 col-md-10 col-12">
+      <div class="mb-5">
+        <h3 class="section-title">料理</h3>
+        <% if (foodProducts.length) { %>
+        <div class="row">
+          <% for (let foodProduct of foodProducts) { %>
+          <div class="col-lg-3 col-md-4 col-6 mb-4">
+            <div class="card product-card h-100 shadow-sm">
+              <div class="card-body text-center">
+                <h5 class="card-title"><%= foodProduct.name %></h5>
+                <p class="card-text price-text">¥ <%= foodProduct.price %></p>
+                <a href="/product/<%= foodProduct._id %>" class="btn btn-success">編集</a>
+              </div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+
+      <div class="mb-5">
+        <h3 class="section-title">ドリンク</h3>
+        <% if (drinkProducts.length) { %>
+        <div class="row">
+          <% for (let drinkProduct of drinkProducts) { %>
+          <div class="col-lg-3 col-md-4 col-6 mb-4">
+            <div class="card product-card h-100 shadow-sm">
+              <div class="card-body text-center">
+                <h5 class="card-title"><%= drinkProduct.name %></h5>
+                <p class="card-text price-text">¥ <%= drinkProduct.price %></p>
+                <a href="/product/<%= drinkProduct._id %>" class="btn btn-success">編集</a>
+              </div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+
+      <div class="mb-5">
+        <h3 class="section-title">その他</h3>
+        <% if (otherProducts.length) { %>
+        <div class="row">
+          <% for (let otherProduct of otherProducts) { %>
+          <div class="col-lg-3 col-md-4 col-6 mb-4">
+            <div class="card product-card h-100 shadow-sm">
+              <div class="card-body text-center">
+                <h5 class="card-title"><%= otherProduct.name %></h5>
+                <p class="card-text price-text">¥ <%= otherProduct.price %></p>
+                <a href="/product/<%= otherProduct._id %>" class="btn btn-success">編集</a>
+              </div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="stylesheets/showProducts.css">

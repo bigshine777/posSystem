@@ -8,7 +8,7 @@ const expressError = require('./utils/expressError');
 const methodOverride = require('method-override');
 
 const orderRoutes = require('./routes/order.js');
-const productRoutes = require('./routes/product.js')
+const productRoutes = require('./routes/product.js');
 
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const dbURI = 'mongodb+srv://bigshine777:OqGyHrNh4oimSJhX@possystem.5kzge.mongodb.net/?retryWrites=true&w=majority&appName=PosSystem'
+const dbURI = process.env.DB_URI;
 
 mongoose.connect(dbURI)
     .then(() => {

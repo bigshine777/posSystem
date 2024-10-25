@@ -1,0 +1,50 @@
+h3 {
+    font-size: calc(1rem + 3vw);
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    /* タイトルの色 */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn {
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: calc(12rem + 30vw);
+    border-radius: 50px;
+    /* ボタンの丸み */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    color: #fff;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: #fff;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #28a745, #218838);
+    color: #fff;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #17a2b8, #117a8b);
+    color: #fff;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ffc107, #d39e00);
+    color: #fff;
+}
+
+.card {
+    border-radius: 20px;
+    background: #f8f9fa;
+}

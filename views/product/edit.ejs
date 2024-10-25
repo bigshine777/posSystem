@@ -2,17 +2,17 @@
 
 <div class="container py-5">
   <div class="row d-flex justify-content-center">
-    <div class="col-lg-6 col-md-8 col-10">
+    <div class="col-lg-6 col-md-8 col-12">
       <div class="card shadow-sm">
         <div class="card-body px-5 pb-3">
-          <h3 class="card-title text-center mb-4">商品の変更</h3>
+          <h3 class="card-title text-center mb-4">メニューの変更</h3>
           <hr class="mb-4">
           <form action="/product/<%= product._id %>?_method=PUT" method="POST">
             <div class="mb-3">
-              <label for="name" class="form-label fw-bold">商品名</label>
+              <label for="name" class="form-label fw-bold">メニュー名</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-cup-straw"></i></span>
-                <input type="text" name="name" class="form-control" placeholder="商品名を入力" value="<%= product.name %>" required>
+                <input type="text" name="name" class="form-control" placeholder="メニュー名を入力" value="<%= product.name %>" required>
               </div>
             </div>
 
