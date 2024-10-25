@@ -32,6 +32,7 @@
 /* カード内の要素の間隔を統一 */
 .card-body h5 {
     margin-bottom: 10px;
+    font-size: calc(0.5vw + 0.7rem);
 }
 
 /* オーダーの量の管理 */
@@ -46,9 +47,8 @@
 .quantity {
     min-width: 30px;
     text-align: center;
-    font-size: calc(1.3rem + 0.8vw);
+    font-size: calc(1.3rem + 0.6vw);
 }
-
 
 /* ボタンのスタイル */
 .minus-btn,
@@ -67,4 +67,97 @@
     border: 1px solid #ddd;
     background-color: #f8f9fa;
     transition: background-color 0.2s;
+}
+
+/* 画面幅が768px以上の時に適用するスタイル */
+@media (min-width: 400px) {
+    .minus-btn,
+    .plus-btn {
+        font-size: 1.6rem;
+    }
+}
+
+#confirmOrderBtn {
+    position: fixed; /* 画面に固定 */
+    bottom: 20px;    /* 画面下からの距離 */
+    left: 50%;       /* 水平方向中央 */
+    transform: translateX(-50%); /* ボタンを中央揃え */
+    width: 90%;      /* ボタンの幅を調整 */
+    max-width: 400px;
+    padding: 15px;
+    background-color: #d73737;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    text-align: center;
+    transition: background-color 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#confirmOrderBtn:hover {
+    background-color: #bd2828;
+}
+
+/* モーダル全体のスタイル（非表示がデフォルト） */
+.modal {
+    display: none; /* 初期状態は非表示 */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 背景を半透明に */
+}
+
+/* モーダルのコンテンツ */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto; /* 上下中央に配置 */
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 閉じるボタン */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* ボタンのスタイル */
+.btn-success, .btn-cancel {
+    width: 45%;
+    padding: 10px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-cancel {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-cancel:hover {
+    background-color: #f5c6cb;
 }

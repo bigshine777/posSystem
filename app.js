@@ -34,7 +34,7 @@ app.set('views', path.join(__dirname, 'views'));
 // セッション設定
 const session = require('express-session');
 app.use(session({
-    secret: process.env.SESSION_SECRET, // 任意の秘密キー
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 60000 } // クッキーの有効期限(1分)
