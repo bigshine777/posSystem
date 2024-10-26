@@ -2,27 +2,35 @@
 
 <div class="container">
   <div class="row d-flex justify-content-center">
-    <div class="col-8 mt-5">
+    <div class="col-lg-8 col-md-10 col-12 mt-5">
       <h3>現在受付中のオーダー</h3>
       <table class="table">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">商品名</th>
+            <th scope="col">商品</th>
             <th scope="col">注文卓</th>
             <th scope="col">注文時間</th>
-            <th scope="col">価格</th>
+            <th scope="col">お会計</th>
           </tr>
         </thead>
         <tbody>
           <% if (currentOrders.length>0) { %>
           <% for( let index = 0; index < currentOrders.length; index++ ) { %>
           <tr>
-            <th scope="row"><%= index %></th>
-            <td><%= currentOrders[index].product.price %></td>
+            <th scope="row"><%= index + 1 %></th>
+            <td>
+              <ul>
+                <% for( let currentOrderProduct of currentOrders[index].products) { %>
+                <% for( let index = 0; index < currentOrderProduct.quantity; index++ ) { %>
+                <li><%= currentOrderProduct.product.name %></li>
+                <% } %>
+                <% } %>
+              </ul>
+            </td>
             <td><%= currentOrders[index].orderedBy %></td>
             <td><%= currentOrders[index].createdAt %></td>
-            <td><%= currentOrders[index].product.price %></td>
+            <td><%= currentOrders[index].totalPrice %></td>
           </tr>
           <% } %>
           <% } %>
@@ -42,14 +50,20 @@
           </tr>
         </thead>
         <tbody>
-          <% if (presentOrders.length) { %>
-          <% for( let index = 0; index < presentOrders.length; index++ ) { %>
+          <% if (previousOrders.length>0) { %>
+          <% for( let index = 0; index < previousOrders.length; index++ ) { %>
           <tr>
-            <th scope="row"><%= index %></th>
-            <td><%= presentOrders[index].product.price %></td>
-            <td><%= presentOrders[index].orderedBy %></td>
-            <td><%= presentOrders[index].createdAt %></td>
-            <td><%= presentOrders[index].product.price %></td>
+            <th scope="row"><%= index + 1 %></th>
+            <td>
+              <ul>
+                <% for( let previousOrderProduct of previousOrders[index].products) { %>
+                <li><%= previousOrderProduct.product.name %></li>
+                <% } %>
+              </ul>
+            </td>
+            <td><%= previousOrders[index].orderedBy %></td>
+            <td><%= previousOrders[index].createdAt %></td>
+            <td><%= previousOrders[index].totalPrice %></td>
           </tr>
           <% } %>
           <% } %>
@@ -58,5 +72,3 @@
     </div>
   </div>
 </div>
-
-<link rel="stylesheet" href="stylesheets/createOrder.css">

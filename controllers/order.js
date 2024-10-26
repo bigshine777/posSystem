@@ -3,10 +3,12 @@ const Product = require('../models/product')
 
 // 注文のホームページを表示する（GET）
 exports.index = async (req, res) => {
-    const currentOrders = await Order.find({ isServed: true });
-    const presentOrders = await Order.find({ isServed: false });
+    const currentOrders = await Order.find({ isServed: false }).populate('products.product');
+    const previousOrders = await Order.find({ isServed: true }).populate('products.product');
 
-    res.render('order/index', { currentOrders, presentOrders });
+    console.log(currentOrders)
+
+    res.render('order/index', { currentOrders, previousOrders });
 };
 
 // 新規注文ページを表示する（GET）
@@ -20,5 +22,9 @@ exports.create = async (req, res) => {
 
 // 新規注文を保存する（POST）
 exports.createPost = (req, res) => {
-    res.send('POST完了');
+    console.log(req.body);
+    const newOrder = new Order(req.body);
+    newOrder.save();
+
+    res.redirect('/order');
 };

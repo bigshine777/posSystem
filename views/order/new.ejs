@@ -3,6 +3,27 @@
 <div class="container pb-5">
   <div class="row d-flex justify-content-center">
     <div class="col-lg-9 col-md-10 col-12">
+      <div class="mb-5">
+        <h3 class="section-title">注文卓を選択</h3>
+        <div class="card-container row">
+          <div class="col-lg-2 col-md-3 col-4 text-center">
+            <div class="table-card card h-100 shadow-sm selected" onclick="selectTable(this)">
+              <h5 class="card-title my-2"><span class="me-2" id="check-mark">&#10003;</span>卓 1</h5>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-4 text-center">
+            <div class="table-card card h-100 shadow-sm" onclick="selectTable(this)">
+              <h5 class="card-title my-2"><span class="me-1" id="check-mark">&#10003;</span>卓 2</h5>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-4 text-center">
+            <div class="table-card card h-100 shadow-sm" onclick="selectTable(this)">
+              <h5 class="card-title my-2"><span class="me-1" id="check-mark">&#10003;</span>卓 3</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- 料理セクション -->
       <div class="mb-5">
         <h3 class="section-title">料理</h3>
@@ -15,7 +36,7 @@
                 <h5 class="card-title"><%= foodProduct.name %></h5>
                 <p class="card-text price-text">¥ <%= foodProduct.price %></p>
 
-                <div class="quantity-controller">
+                <div class="quantity-controller" data-product-name="<%= foodProduct.name %>" data-product-id="<%= foodProduct._id %>" data-product-price="<%= foodProduct.price %>">
                   <button class="minus-btn btn btn-sm btn-outline-secondary">-</button>
                   <span class="quantity">0</span>
                   <button class="plus-btn btn btn-sm btn-outline-secondary">+</button>
@@ -41,7 +62,7 @@
                 <h5 class="card-title"><%= drinkProduct.name %></h5>
                 <p class="card-text price-text">¥ <%= drinkProduct.price %></p>
 
-                <div class="quantity-controller">
+                <div class="quantity-controller" data-product-name="<%= drinkProduct.name %>" data-product-id="<%= drinkProduct._id %>" data-product-price="<%= drinkProduct.price %>">
                   <button class="minus-btn btn btn-sm btn-outline-secondary">-</button>
                   <span class="quantity">0</span>
                   <button class="plus-btn btn btn-sm btn-outline-secondary">+</button>
@@ -67,7 +88,7 @@
                 <h5 class="card-title"><%= otherProduct.name %></h5>
                 <p class="card-text price-text">¥ <%= otherProduct.price %></p>
 
-                <div class="quantity-controller">
+                <div class="quantity-controller" data-product-name="<%= otherProduct.name %>" data-product-id="<%= otherProduct._id %>" data-product-price="<%= otherProduct.price %>">
                   <button class="minus-btn btn btn-sm btn-outline-secondary">-</button>
                   <span class="quantity">0</span>
                   <button class="plus-btn btn btn-sm btn-outline-secondary">+</button>
@@ -80,7 +101,7 @@
         </div>
         <% } %>
       </div>
-      
+
       <button class="btn btn-danger" id="confirmOrderBtn">注文の確認</button>
 
     </div>
@@ -89,14 +110,21 @@
 
 <!-- モーダルウィンドウ -->
 <div id="orderModal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn">&times;</span>
-      <h2>注文確認</h2>
-      <p>注文を確定しますか？</p>
-      <button id="confirmBtn" class="btn-success btn">はい</button>
-      <button id="cancelBtn" class="btn-cancel btn">キャンセル</button>
+  <div class="modal-content">
+    <h3>注文確認</h3>
+    <p><span id="tableName" class="me-1"></span>の注文を確定しますか？</p>
+    <!-- 注文内容を表示するリスト -->
+    <ul id="orderList" class="text-start"></ul>
+
+    <div class="mt-auto text-start d-flex justify-content-center mx-5 mb-2" id="totalBlock">
+      <span class="me-auto">合計金額</span><span id="totalPrice" class="ms-auto"></span>
+    </div>
+    <div class="d-flex justify-content-center mt-0">
+      <button id="confirmBtn" class="btn-danger btn">確定</button>
+      <button id="cancelBtn" class="btn-secondary btn">キャンセル</button>
     </div>
   </div>
+</div>
 
 <!-- CSSの読み込み -->
 <link rel="stylesheet" href="/stylesheets/createOrder.css">
