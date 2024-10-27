@@ -3,7 +3,7 @@ const orderModal = document.getElementById("orderModal");
 const confirmOrderBtn = document.getElementById("confirmOrderBtn");
 const cancelBtn = document.getElementById("cancelBtn");
 const confirmBtn = document.getElementById("confirmBtn");
-const modalTableName = document.getElementById('tableName');
+const modalTableNames = document.querySelectorAll('#tableName');
 
 let tableName;
 let totalPrice = 0;
@@ -21,16 +21,20 @@ const updateConfirmButtonState = () => {
 
 // 数量が1以上でオーダーに追加
 const updateOrderList = (quantity, productId, productName, productPrice) => {
-    if (quantity > 0) {
-        // 既存の製品を検索
-        const existingProduct = orderProducts.find(product => product._id === productId);
+    // 既存の製品を検索
+    const existingProduct = orderProducts.find(product => product._id === productId);
 
+    if (quantity > 0) {
         if (existingProduct) {
             // 既にリストにある場合は数量を更新
             existingProduct.quantity = quantity;
         } else {
             // 新規製品を追加
             orderProducts.push({ _id: productId, name: productName, quantity: quantity, price: productPrice });
+        }
+    } else if (quantity === 0) {
+        if (existingProduct) {
+            orderProducts = orderProducts.filter(product => product !== existingProduct);
         }
     }
 };
@@ -60,13 +64,13 @@ function displayOrder(items) {
 document.addEventListener('DOMContentLoaded', () => {
     // 選択しているtableの名前を取得
     tableName = document.querySelector('.table-card.selected h5').textContent.replace('✓', '');
-    modalTableName.textContent = tableName;
+
+    modalTableNames.forEach(modalTableName => {
+        modalTableName.textContent = tableName;
+    });
 
     // すべての数量コントローラを取得
     const quantityControllers = document.querySelectorAll('.quantity-controller');
-
-    // 初期状態で注文ボタンを無効化
-    confirmOrderBtn.disabled = true;
 
     quantityControllers.forEach(controller => {
         const minusBtn = controller.querySelector('.minus-btn');
@@ -77,7 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const productId = controller.dataset.productId;
         const productPrice = controller.dataset.productPrice;
 
-        let quantity = 0; // 初期数量
+        let quantity = parseInt(quantityDisplay.textContent); // 初期数量
+        allQuantity += quantity;
+
+        updateOrderList(quantity, productId, productName, productPrice);
 
         // マイナスボタンのクリックイベント
         minusBtn.addEventListener('click', () => {
@@ -99,6 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
             updateConfirmButtonState(); // ボタンの状態更新
         });
     });
+
+    if (allQuantity > 0) {
+        confirmOrderBtn.disabled = false;
+    }
 });
 
 function selectTable(selectedCard) {
@@ -112,7 +123,10 @@ function selectTable(selectedCard) {
 
     // 選択しているtableの名前を取得
     tableName = document.querySelector('.table-card.selected h5').textContent.replace('✓', '');
-    modalTableName.textContent = tableName;
+    
+    modalTableNames.forEach(modalTableName => {
+        modalTableName.textContent = tableName;
+    });
 };
 
 // モーダルを表示する関数
@@ -131,8 +145,9 @@ cancelBtn.onclick = () => {
 // orderをpostする関数
 confirmBtn.onclick = async () => {
     try {
-        const response = await fetch("/order/create", {
-            method: "POST",
+        const id = document.getElementById('id').dataset.orderId;
+        const response = await fetch(`/order/${id}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -164,4 +179,47 @@ window.onclick = (event) => {
     }
 };
 
+// DOM要素の取得
+const deleteModal = document.getElementById("deleteModal");
+const deleteOrderBtn = document.getElementById("deleteOrderBtn");
+const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
 
+// モーダルを表示する関数
+deleteOrderBtn.onclick = () => {
+    deleteModal.style.display = "block";
+};
+
+// モーダルを閉じる関数
+cancelDeleteBtn.onclick = () => {
+    deleteModal.style.display = "none";
+};
+
+// orderをdeleteする関数
+confirmDeleteBtn.onclick = async () => {
+    try {
+        const id = document.getElementById('id').dataset.orderId;
+        const response = await fetch(`/order/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        });
+
+        if (response.redirected) {
+            // リダイレクト先に遷移する
+            window.location.href = response.url;
+            return;
+        }
+
+    } catch (err) {
+        console.error("Error posting order:", err);
+    }
+};
+
+// モーダル外をクリックした場合の処理
+window.onclick = (event) => {
+    if (event.target === deleteModal) {
+        deleteModal.style.display = "none";
+    }
+};

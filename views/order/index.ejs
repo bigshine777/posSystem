@@ -1,8 +1,8 @@
 <% layout('layouts/base') %>
 
-<div class="container">
+<div class="container" id="orderBlock">
   <div class="row d-flex justify-content-center">
-    <div class="col-lg-8 col-md-10 col-12 mt-5">
+    <div class="col-lg-8 col-md-10 col-12">
       <h3>現在受付中のオーダー</h3>
       <table class="table">
         <thead>
@@ -12,6 +12,8 @@
             <th scope="col">注文卓</th>
             <th scope="col">注文時間</th>
             <th scope="col">お会計</th>
+            <th scope="col">完了</th>
+            <th scope="col">編集</th>
           </tr>
         </thead>
         <tbody>
@@ -20,7 +22,7 @@
           <tr>
             <th scope="row"><%= index + 1 %></th>
             <td>
-              <ul>
+              <ul class="productList">
                 <% for( let currentOrderProduct of currentOrders[index].products) { %>
                 <% for( let index = 0; index < currentOrderProduct.quantity; index++ ) { %>
                 <li><%= currentOrderProduct.product.name %></li>
@@ -29,15 +31,19 @@
               </ul>
             </td>
             <td><%= currentOrders[index].orderedBy %></td>
-            <td><%= currentOrders[index].createdAt %></td>
+            <td><%= new Date(currentOrders[index].createdAt).toLocaleDateString("ja-JP", { month: "short", day: "numeric" }) %> <%= new Date(currentOrders[index].createdAt).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" }) %></td>
             <td><%= currentOrders[index].totalPrice %></td>
+            <td>
+              <form action="/order/<%= currentOrders[index]._id %>?_method=PATCH" method="POST"><button class="btn btn-warning">完了</button></form>
+            </td>
+            <td><a href="/order/<%= currentOrders[index]._id %>" class="btn btn-success">編集</a></td>
           </tr>
           <% } %>
           <% } %>
         </tbody>
       </table>
     </div>
-    <div class="col-8 mt-5">
+    <div class="col-lg-8 col-md-10 col-12">
       <h3>お届け済みのオーダー</h3>
       <table class="table">
         <thead>
@@ -47,23 +53,29 @@
             <th scope="col">注文卓</th>
             <th scope="col">注文時間</th>
             <th scope="col">価格</th>
+            <th scope="col">未完了</th>
+            <th scope="col">編集</th>
           </tr>
         </thead>
         <tbody>
           <% if (previousOrders.length>0) { %>
-          <% for( let index = 0; index < previousOrders.length; index++ ) { %>
+          <% for( let index = previousOrders.length-1; index >=0; index-- ) { %>
           <tr>
-            <th scope="row"><%= index + 1 %></th>
+            <th scope="row"><%= previousOrders.length-index %></th>
             <td>
-              <ul>
+              <ul class="productList">
                 <% for( let previousOrderProduct of previousOrders[index].products) { %>
                 <li><%= previousOrderProduct.product.name %></li>
                 <% } %>
               </ul>
             </td>
             <td><%= previousOrders[index].orderedBy %></td>
-            <td><%= previousOrders[index].createdAt %></td>
+            <td><%= new Date(previousOrders[index].createdAt).toLocaleDateString("ja-JP", { month: "short", day: "numeric" }) %> <%= new Date(previousOrders[index].createdAt).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" }) %></td>
             <td><%= previousOrders[index].totalPrice %></td>
+            <td>
+              <form action="/order/<%= previousOrders[index]._id %>?_method=PATCH" method="POST"><button class="btn btn-danger">未完了</button></form>
+            </td>
+            <td><a href="/order/<%= previousOrders[index]._id %>" class="btn btn-success">編集</a></td>
           </tr>
           <% } %>
           <% } %>
@@ -72,3 +84,102 @@
     </div>
   </div>
 </div>
+
+<style>
+  /* 基本スタイル */
+  #orderBlock {
+    background-color: #f7f7f7;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    color: #333;
+  }
+
+  /* コンテナとタイトル */
+  .container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+
+  /* タイトル */
+  h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  /* テーブル */
+  .table {
+    margin-top: 10px;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+  }
+
+  .table thead th {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    text-align: center;
+  }
+
+  .table tbody tr {
+    background-color: #fdfdfd;
+    transition: transform 0.2s ease-in-out;
+    border-radius: 8px;
+  }
+
+  .table tbody tr:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* テーブルのセル */
+  .table td,
+  .table th {
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  /* ボタン */
+  .btn-warning {
+    background-color: #ffca28;
+    border: none;
+  }
+
+  .btn-warning:hover {
+    background-color: #ffb300;
+  }
+
+  .btn-danger {
+    background-color: #e22c2c;
+    border: none;
+  }
+
+  .btn-danger:hover {
+    background-color: #b12323;
+  }
+
+  .btn-success {
+    background-color: #31b937;
+    border: none;
+  }
+
+  .btn-success:hover {
+    background-color: #29a32f;
+  }
+
+  /* 注文リスト */
+  ul.productList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  ul.productList li {
+    background-color: #e0f7fa;
+    margin: 2px 0;
+    padding: 5px;
+    border-radius: 4px;
+  }
+</style>
