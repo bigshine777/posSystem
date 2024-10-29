@@ -1,72 +1,67 @@
 // DOM要素の取得
-const orderModal = document.getElementById("orderModal");
-const confirmOrderBtn = document.getElementById("confirmOrderBtn");
+const checkoutModal = document.getElementById("checkoutModal");
+const confirmcheckoutBtn = document.getElementById("confirmcheckoutBtn");
 const cancelBtn = document.getElementById("cancelBtn");
 const confirmBtn = document.getElementById("confirmBtn");
-const modalTableName = document.getElementById('tableName');
 
-let tableName;
 let totalPrice = 0;
 
 // モーダル内のリスト要素を取得
-const orderList = document.getElementById('orderList');
+const checkoutList = document.getElementById('checkoutList');
 
 let allQuantity = 0;
-let orderProducts = [];
+let checkoutProducts = [];
 
 // 数量の変更後にボタンの有効/無効を切り替える関数
 const updateConfirmButtonState = () => {
-    confirmOrderBtn.disabled = allQuantity === 0;
+    confirmcheckoutBtn.disabled = allQuantity === 0;
 };
 
 // 数量が1以上でオーダーに追加
-const updateOrderList = (quantity, productId, productName, productPrice) => {
-    if (quantity > 0) {
-        // 既存の製品を検索
-        const existingProduct = orderProducts.find(product => product._id === productId);
+const updatecheckoutList = (quantity, productId, productName, productPrice) => {
+    // 既存の製品を検索
+    const existingProduct = checkoutProducts.find(product => product._id === productId);
 
+    if (quantity > 0) {
         if (existingProduct) {
             // 既にリストにある場合は数量を更新
             existingProduct.quantity = quantity;
         } else {
             // 新規製品を追加
-            orderProducts.push({ _id: productId, name: productName, quantity: quantity, price: productPrice });
+            checkoutProducts.push({ _id: productId, name: productName, quantity: quantity, price: productPrice });
+        }
+    } else if (quantity === 0) {
+        if (existingProduct) {
+            checkoutProducts = checkoutProducts.filter(product => product !== existingProduct);
         }
     }
 };
 
 // 注文内容をリストに表示する関数
-function displayOrder(items) {
+function displaycheckout(items) {
     // リストを一度クリア
-    orderList.innerHTML = '';
+    checkoutList.innerHTML = '';
 
     // 各商品を<li>として追加
     items.forEach(item => {
         const listItem = document.createElement('li');
         listItem.textContent = `${item.name}  × ${item.quantity}`;
-        orderList.appendChild(listItem);
+        checkoutList.appendChild(listItem);
     });
 
     const modalTotalPrice = document.getElementById('totalPrice');
 
     totalPrice = 0;
 
-    for (let orderProduct of orderProducts) {
-        totalPrice += parseInt(orderProduct.price) * parseInt(orderProduct.quantity);
+    for (let checkoutProduct of checkoutProducts) {
+        totalPrice += parseInt(checkoutProduct.price) * parseInt(checkoutProduct.quantity);
     }
     modalTotalPrice.textContent = "¥" + totalPrice;
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 選択しているtableの名前を取得
-    tableName = document.querySelector('.table-card.selected h5').textContent.replace('✓', '');
-    modalTableName.textContent = tableName;
-
     // すべての数量コントローラを取得
     const quantityControllers = document.querySelectorAll('.quantity-controller');
-
-    // 初期状態で注文ボタンを無効化
-    confirmOrderBtn.disabled = true;
 
     quantityControllers.forEach(controller => {
         const minusBtn = controller.querySelector('.minus-btn');
@@ -77,7 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const productId = controller.dataset.productId;
         const productPrice = controller.dataset.productPrice;
 
-        let quantity = 0; // 初期数量
+        let quantity = parseInt(quantityDisplay.textContent); // 初期数量
+        allQuantity += quantity;
+
+        updatecheckoutList(quantity, productId, productName, productPrice);
 
         // マイナスボタンのクリックイベント
         minusBtn.addEventListener('click', () => {
@@ -85,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 allQuantity--;
                 quantity--;
                 quantityDisplay.textContent = quantity;
-                updateOrderList(quantity, productId, productName, productPrice);
+                updatecheckoutList(quantity, productId, productName, productPrice);
                 updateConfirmButtonState(); // ボタンの状態更新
             }
         });
@@ -95,10 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
             quantity++;
             allQuantity++;
             quantityDisplay.textContent = quantity;
-            updateOrderList(quantity, productId, productName, productPrice);
+            updatecheckoutList(quantity, productId, productName, productPrice);
             updateConfirmButtonState(); // ボタンの状態更新
         });
     });
+
+    if (allQuantity > 0) {
+        confirmcheckoutBtn.disabled = false;
+    }
 });
 
 function selectTable(selectedCard) {
@@ -109,41 +111,76 @@ function selectTable(selectedCard) {
 
     // クリックされたカードに 'selected' クラスを追加
     selectedCard.classList.add('selected');
-
-    // 選択しているtableの名前を取得
-    tableName = document.querySelector('.table-card.selected h5').textContent.replace('✓', '');
-    modalTableName.textContent = tableName;
 };
 
 // モーダルを表示する関数
-confirmOrderBtn.onclick = () => {
+confirmcheckoutBtn.onclick = () => {
     if (allQuantity > 0) {
-        orderModal.style.display = "block";
-        displayOrder(orderProducts);
+        checkoutModal.style.display = "block";
+        displaycheckout(checkoutProducts);
     }
 };
 
 // モーダルを閉じる関数
 cancelBtn.onclick = () => {
-    orderModal.style.display = "none";
+    checkoutModal.style.display = "none";
 };
 
-// orderをpostする関数
+// checkoutをpostする関数
 confirmBtn.onclick = async () => {
     try {
-        const response = await fetch("/order/create", {
-            method: "POST",
+        const id = document.getElementById('id').dataset.checkoutId;
+        const response = await fetch(`/checkout/${id}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                products: orderProducts.map((order) => ({
-                    product: order._id,
-                    quantity: order.quantity,
+                products: checkoutProducts.map((checkout) => ({
+                    product: checkout._id,
+                    quantity: checkout.quantity,
                 })),
-                orderedBy: tableName,
                 totalPrice,
             }),
+        });
+
+    } catch (err) {
+        console.error("Error posting checkout:", err);
+    }
+};
+
+// モーダル外をクリックした場合の処理
+window.onclick = (event) => {
+    if (event.target === checkoutModal) {
+        checkoutModal.style.display = "none";
+    }
+};
+
+// DOM要素の取得
+const deleteModal = document.getElementById("deleteModal");
+const deletecheckoutBtn = document.getElementById("deletecheckoutBtn");
+const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+
+// モーダルを表示する関数
+deletecheckoutBtn.onclick = () => {
+    deleteModal.style.display = "block";
+};
+
+// モーダルを閉じる関数
+cancelDeleteBtn.onclick = () => {
+    deleteModal.style.display = "none";
+};
+
+// checkoutをdeleteする関数
+confirmDeleteBtn.onclick = async () => {
+    try {
+        const id = document.getElementById('id').dataset.checkoutId;
+        const response = await fetch(`/checkout/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
         });
 
         if (response.redirected) {
@@ -153,16 +190,13 @@ confirmBtn.onclick = async () => {
         }
 
     } catch (err) {
-        console.error("Error posting order:", err);
+        console.error("Error posting checkout:", err);
     }
 };
 
 // モーダル外をクリックした場合の処理
 window.onclick = (event) => {
-    if (event.target === orderModal) {
-        orderModal.style.display = "none";
+    if (event.target === deleteModal) {
+        deleteModal.style.display = "none";
     }
 };
-
-
-

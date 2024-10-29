@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const orderSchema = mongoose.Schema({
+const CheckoutSchema = mongoose.Schema({
     products: [{
         product: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product',
-            required : true,
+            required: true,
         }, quantity: {
             type: Number,
             required: true,
@@ -16,24 +16,24 @@ const orderSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    orderedBy: {
+    checkoutedBy: {
         type: String,
-        required : true,
+        required: true,
     },
-    isServed: {
-        type: Boolean,
-        default : false,
+    totalPrice: {
+        type: Number,
+        required: true,
     },
     isPaid: {
         type: Boolean,
-        default : false,
+        default: false,
     },
-    totalPrice : {
-        type : Number,
-        required : true,
-    }
+    orders: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order',
+    }]
 });
 
-const Order = mongoose.model('Order', orderSchema);
+const Checkout = mongoose.model('Checkout', CheckoutSchema);
 
-module.exports = Order;
+module.exports = Checkout;

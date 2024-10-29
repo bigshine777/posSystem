@@ -1,0 +1,92 @@
+<% layout('layouts/base.ejs') %>
+
+<div class="container" id="orderBlock">
+  <div class="row d-flex justify-content-center">
+    <div class="col-lg-8 col-md-10 col-12">
+      <h3 class="mb-0">未支払いの会計</h3>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">商品名</th>
+              <th scope="col">注文卓</th>
+              <th scope="col">会計時間</th>
+              <th scope="col">会計</th>
+              <th scope="col">支払い</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (unpaidCheckouts.length>0) { %>
+            <% for( let index = 0; index < unpaidCheckouts.length; index++ ) { %>
+            <tr>
+              <th scope="row"><%= index + 1 %></th>
+              <td>
+                <ul class="productList">
+                  <% for( let unpaidCheckoutProduct of unpaidCheckouts[index].products) { %>
+                  <% for( let index = 0; index < unpaidCheckoutProduct.quantity; index++ ) { %>
+                  <li><%= unpaidCheckoutProduct.product.name %></li>
+                  <% } %>
+                  <% } %>
+                </ul>
+              </td>
+              <td><%= unpaidCheckouts[index].checkoutedBy %></td>
+              <td><%= new Date(unpaidCheckouts[index].createdAt).toLocaleDateString("ja-JP", { month: "short", day: "numeric" }) %> <%= new Date(unpaidCheckouts[index].createdAt).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" }) %></td>
+              <td><%= unpaidCheckouts[index].totalPrice %></td>
+              <td><a href="/checkout/<%= unpaidCheckouts[index]._id %>" class="btn btn-danger">支払い</a></td>
+            </tr>
+            <% } %>
+            <% } else { %>
+            <tr>
+              <td colspan="7" class="text-center">現在未支払いの会計はありません</td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-10 col-12">
+      <h3 class="mb-0">支払い済の会計</h3>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">商品名</th>
+              <th scope="col">注文卓</th>
+              <th scope="col">会計時間</th>
+              <th scope="col">会計</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (paidCheckouts.length>0) { %>
+            <% for( let index = paidCheckouts.length-1; index >=0; index-- ) { %>
+            <tr>
+              <th scope="row"><%= paidCheckouts.length-index %></th>
+              <td>
+                <ul class="productList">
+                  <% for( let paidCheckoutProduct of paidCheckouts[index].products) { %>
+                  <% for( let index = 0; index < paidCheckoutProduct.quantity; index++ ) { %>
+                  <li><%= paidCheckoutProduct.product.name %></li>
+                  <% } %>
+                  <% } %>
+                </ul>
+              </td>
+              <td><%= paidCheckouts[index].checkoutedBy %></td>
+              <td><%= new Date(paidCheckouts[index].createdAt).toLocaleDateString("ja-JP", { month: "short", day: "numeric" }) %> <%= new Date(paidCheckouts[index].createdAt).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" }) %></td>
+              <td><%= paidCheckouts[index].totalPrice %></td>
+            </tr>
+            <% } %>
+            <% } else { %>
+            <tr>
+              <td colspan="7" class="text-center">現在支払い済の会計はありません</td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="/stylesheets/showOrder.css">

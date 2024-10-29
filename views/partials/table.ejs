@@ -1,0 +1,10 @@
+<div class="card-container row d-flex justify-content-center">
+  <% for( let index = 1; index <= 9; index++ ) { %>
+  <div class="col-lg-2 col-md-3 col-4 text-center mt-2">
+    <div class="table-card card h-100 shadow-sm <%= (typeof order === 'undefined' && typeof foodProducts !== 'undefined' && index === 1) || (typeof order !== 'undefined' && order.orderedBy === `卓 ${index}`) ? 'selected' : '' %>
+      " onclick="selectTable(this)">
+      <h5 class="card-title my-2">卓 <%= index %></h5>
+    </div>
+  </div>
+  <% } %>
+</div>

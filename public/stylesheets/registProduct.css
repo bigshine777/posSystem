@@ -1,4 +1,15 @@
-h3.card-title{
+h3.card-title {
     border-bottom: 2px solid #28a745;
     padding-bottom: 10px;
+}
+
+.card {
+    background-color: rgb(255, 221, 227);
+    border-radius: 10px;
+    border: none;
+    padding: 3%;
+}
+
+.btn-primary{
+    background-color: rgb(0, 132, 255);
 }

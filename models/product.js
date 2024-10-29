@@ -14,7 +14,6 @@ const productSchema = mongoose.Schema({
     category: String,
 });
 
-// 'model' は小文字にする必要があります
 const Product = mongoose.model('Product', productSchema);
 
 module.exports = Product;

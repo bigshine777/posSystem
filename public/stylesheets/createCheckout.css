@@ -1,0 +1,112 @@
+#colBlock{
+    background-color: rgb(255, 221, 227);
+    border-radius: 10px;
+}
+
+/* セクションタイトルのスタイル */
+.section-title {
+    font-weight: bold;
+    font-size: calc(1rem+1vw);
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* 卓カードのスタイル */
+.table-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* ホバー時の拡大アニメーション */
+.table-card:hover {
+    transform: scale(1.05); /* 1.05倍に拡大 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 少し強い影を追加 */
+}
+
+.table-card.selected {
+    border: 2px solid #28a745; /* 選択時の枠線 */
+    transform: scale(1.05);
+}
+
+.table-card #check-mark{
+    display: none;
+}
+
+.table-card.selected #check-mark{
+    display: inline;
+    color: #28a745;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: 1rem;
+    border: 1px solid #28a745;
+    border-radius: 100%;
+    font-weight: bold;
+}
+
+/* モーダル全体のスタイル（非表示がデフォルト） */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 背景を半透明に */
+}
+
+/* モーダルのコンテンツ */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    /* 上下中央に配置 */
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 400px;
+    min-height: 50vh;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: calc(0.8rem + 0.4vw);
+}
+
+/* モーダルのコンテンツ */
+.noresult-modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    /* 上下中央に配置 */
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: calc(0.85rem + 0.4vw);
+}
+
+#confirmBtn {
+    border-radius: 25px;
+    width: 40%;
+    margin-right: 5%;
+    font-size: calc(0.7rem + 0.4vw);
+}
+
+#cancelOrderBtn,#cancelNoResultBtn {
+    border-radius: 25px;
+    width: 40%;
+    margin-left: 5%;
+    font-size: calc(0.7rem + 0.4vw);
+}
+
+#orderList{
+    font-size: calc(1rem + 0.4vw);
+}
+
+#totalBlock{
+    font-size: calc(1rem + 0.4vw);
+}
+

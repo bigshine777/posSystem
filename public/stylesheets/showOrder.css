@@ -1,0 +1,106 @@
+/* 基本スタイル */
+#orderBlock {
+    background-color: rgb(255, 221, 227);
+    color: #333;
+}
+
+/* コンテナとタイトル */
+.container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* テーブルのスクロール対応 */
+.table-responsive {
+    overflow-x: auto; /* 横スクロールを有効にする */
+}
+
+.table-responsive table {
+    min-width: 100%;
+}
+
+/* タイトル */
+h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* テーブル */
+.table {
+    margin-top: 10px;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.table thead th {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    text-align: center;
+}
+
+.table tbody tr {
+    background-color: #fdfdfd;
+    transition: transform 0.2s ease-in-out;
+    border-radius: 8px;
+}
+
+.table tbody tr:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* テーブルのセル */
+.table td,
+.table th {
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* ボタン */
+.btn-warning {
+    background-color: #ffca28;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #ffb300;
+}
+
+.btn-danger {
+    background-color: #e22c2c;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #b12323;
+}
+
+.btn-success {
+    background-color: #31b937;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #29a32f;
+}
+
+/* 注文リスト */
+ul.productList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.productList li {
+    background-color: #beecf3;
+    margin: 2px 0;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+

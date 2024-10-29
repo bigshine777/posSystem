@@ -1,0 +1,31 @@
+<% layout('layouts/base.ejs') %>
+
+<div class="container px-3 px-md-0">
+  <div class="row d-flex justify-content-center">
+    <div class="col-lg-6 col-md-8 col-10 pt-4" id="colBlock">
+      <div class="checkout-header mb-1">
+        <h4 class="text-center mb-2">お支払い</h4>
+        <hr class="divider">
+        <h1 class="text-center fw-bold mt-2 total-price">¥<%= checkout.totalPrice.toLocaleString() %></h1>
+      </div>
+      <hr class="divider mt-0">
+      <div class="checkout-items">
+        <ul class="list-group">
+          <% for (let productData of checkout.products) { %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><%= productData.product.name %>&nbsp;×&nbsp;<%= productData.quantity %></span>
+              <span>¥<%= (productData.product.price * productData.quantity).toLocaleString() %></span>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+      <hr class="divider">
+      <a href="/checkout/<%= checkout._id %>/edit" class="btn-success btn my-2">変更</a>
+      <form action="/checkout/<%= checkout._id %>?_method=PATCH" method="POST">
+        <button class="btn-orange btn mt-2 mb-4">¥現金支払い</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="/stylesheets/showCheckout.css">

@@ -7,9 +7,6 @@ const engineMate = require('ejs-mate');
 const expressError = require('./utils/expressError');
 const methodOverride = require('method-override');
 
-const orderRoutes = require('./routes/order.js');
-const productRoutes = require('./routes/product.js');
-
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
 
@@ -52,8 +49,15 @@ app.use((req, res, next) => {
     next();
 });
 
+const orderRoutes = require('./routes/order.js');
+const productRoutes = require('./routes/product.js');
+const chcekoutRoutes = require('./routes/checkout.js');
+const serverRoutes = require('./routes/server.js');
+
 app.use('/order', orderRoutes);
 app.use('/product', productRoutes);
+app.use('/checkout',chcekoutRoutes);
+app.use('/server',serverRoutes);
 
 app.get('/', (req, res) => {
     res.render('home');

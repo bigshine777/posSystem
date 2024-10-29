@@ -7,8 +7,6 @@ exports.index = async (req, res) => {
         const currentOrders = await Order.find({ isServed: false }).populate('products.product');
         const previousOrders = await Order.find({ isServed: true }).populate('products.product');
 
-        console.log('currentOrder',currentOrders);
-        console.log('previousOrder',previousOrders);
         res.render('order/index', { currentOrders, previousOrders });
     } catch (error) {
         req.flash('error', '注文の取得中にエラーが発生しました。');

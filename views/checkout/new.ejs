@@ -1,0 +1,43 @@
+<% layout('layouts/base.ejs') %>
+
+<div class="container px-0">
+  <div class="row d-flex justify-content-center">
+    <div class="col-lg-6 col-md-8 col-10 pt-3" id="colBlock">
+      <div class="mb-3">
+        <h3 class="section-title text-center pb-3">会計を確定するテーブルを選択</h3>
+        <%- include('../partials/table') %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- モーダルウィンドウ -->
+<div id="orderModal" class="modal">
+  <div class="modal-content">
+    <h3>注文確認</h3>
+    <p><span id="tableName" class="me-1"></span>の会計を確定しますか？<br>(オーダーの完了を忘れていませんか?)</p>
+
+    <ul id="orderList" class="text-start"></ul>
+
+    <div class="mt-auto text-start d-flex justify-content-center mx-5 mb-2" id="totalBlock">
+      <span class="me-auto">合計金額</span><span id="totalPrice" class="ms-auto"></span>
+    </div>
+    <div class="d-flex justify-content-center mt-0">
+      <button id="confirmBtn" class="btn-danger btn">確定</button>
+      <button id="cancelOrderBtn" class="btn-secondary btn">キャンセル</button>
+    </div>
+  </div>
+</div>
+
+<div id="noResultModal" class="modal">
+    <div class="noresult-modal-content">
+        <p class="text-center">選択したテーブルのオーダーが完了されていない、またはオーダーが存在しないため会計を確定できません</p>
+      <div class="d-flex justify-content-center mt-0">
+        <button id="cancelNoResultBtn" class="btn-danger btn">閉じる</button>
+      </div>
+    </div>
+  </div>
+
+<link rel="stylesheet" href="/stylesheets/createCheckout.css">
+
+<script src="/js/createCheckout.js"></script>

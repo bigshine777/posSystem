@@ -1,3 +1,9 @@
+.container{
+    background-color: rgb(255, 221, 227);
+    border-radius: 10px;
+    padding: 3%;
+}
+
 /* セクションタイトルのスタイル */
 .section-title {
     font-weight: bold;

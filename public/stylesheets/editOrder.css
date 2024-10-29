@@ -1,3 +1,9 @@
+.container {
+    background-color: rgb(255, 221, 227);
+    border-radius: 10px;
+    padding: 3%;
+}
+
 /* セクションタイトルのスタイル */
 .section-title {
     font-weight: bold;
@@ -26,20 +32,23 @@
 
 /* ホバー時の拡大アニメーション */
 .table-card:hover {
-    transform: scale(1.05); /* 1.05倍に拡大 */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 少し強い影を追加 */
+    transform: scale(1.05);
+    /* 1.05倍に拡大 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* 少し強い影を追加 */
 }
 
 .table-card.selected {
-    border: 2px solid #28a745; /* 選択時の枠線 */
+    border: 2px solid #28a745;
+    /* 選択時の枠線 */
     transform: scale(1.05);
 }
 
-.table-card #check-mark{
+.table-card #check-mark {
     display: none;
 }
 
-.table-card.selected #check-mark{
+.table-card.selected #check-mark {
     display: inline;
     color: #28a745;
     padding-left: 3px;
@@ -108,20 +117,30 @@
 }
 
 #button-container {
-    position: fixed; /* 画面下部に固定 */
-    bottom: 20px;    /* 下から20pxに固定 */
-    left: 50%;       /* 横方向の中央 */
-    transform: translateX(-50%); /* 完全に中央揃え */
-    display: flex;   /* 横並びを実現 */
-    gap: 15px;       /* ボタン間の余白 */
-    width: 90%;      /* 全体の幅を調整 */
-    max-width: 800px; /* レスポンシブ対応の最大幅 */
+    position: fixed;
+    /* 画面下部に固定 */
+    bottom: 20px;
+    /* 下から20pxに固定 */
+    left: 50%;
+    /* 横方向の中央 */
+    transform: translateX(-50%);
+    /* 完全に中央揃え */
+    display: flex;
+    /* 横並びを実現 */
+    gap: 15px;
+    /* ボタン間の余白 */
+    width: 90%;
+    /* 全体の幅を調整 */
+    max-width: 800px;
+    /* レスポンシブ対応の最大幅 */
     justify-content: center;
 }
 
 #button-container button {
-    flex: 1; /* 均等に幅を取る */
-    max-width: 400px; /* 各ボタンの最大幅 */
+    flex: 1;
+    /* 均等に幅を取る */
+    max-width: 400px;
+    /* 各ボタンの最大幅 */
     padding: 15px;
     color: white;
     border: none;
@@ -137,7 +156,17 @@
 }
 
 #confirmOrderBtn:hover {
-    background-color: #2da522; /* 明るめの緑 */
+    background-color: #2da522;
+    /* 明るめの緑 */
+}
+
+#confirmOrderBtn:disabled {
+    background-color: #7ad572;
+}
+
+#confirmOrderBtn:disabled:hover {
+    background-color: #7ad572;
+    /* 明るめの緑 */
 }
 
 #deleteOrderBtn {
@@ -145,13 +174,18 @@
 }
 
 #deleteOrderBtn:hover {
-    background-color: #b21f1f; /* 赤色を維持 */
+    background-color: #b21f1f;
+    /* 赤色を維持 */
 }
 
+.btn-green{
+    background-color: #41bc35;
+    color: white;
+}
 
 /* モーダル全体のスタイル（非表示がデフォルト） */
 .modal {
-    display: none; 
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -217,11 +251,11 @@
     font-size: calc(0.7rem + 0.4vw);
 }
 
-#orderList li{
+#orderList li {
     font-size: calc(0.85rem + 0.4vw);
 }
 
-#totalBlock{
+#totalBlock {
     font-size: calc(1rem + 0.5vw);
     display: flex;
     justify-content: center;

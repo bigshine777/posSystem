@@ -15,7 +15,6 @@ h3 {
     width: calc(12rem + 30vw);
     border-radius: 50px;
     /* ボタンの丸み */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .btn:hover {
@@ -40,11 +39,27 @@ h3 {
 }
 
 .btn-warning {
-    background: linear-gradient(135deg, #ffc107, #d39e00);
+    background: linear-gradient(135deg, #ffc107, #2ee991);
     color: #fff;
 }
 
+.btn-pink {
+    background: #f89932;
+    color: #fff;
+}
+
+
+
 .card {
     border-radius: 20px;
-    background: #f8f9fa;
+    background: rgb(255, 221, 227);
+}
+
+img {
+    width: calc(10rem + 10vw);
+    height: calc(10rem + 10vw);
+    margin-bottom: 15px;
+    background-color: pink;
+    border-radius: 100%;
+    padding: calc(1rem + 1vw);
 }

@@ -6,24 +6,8 @@
   <div class="row d-flex justify-content-center">
     <div class="col-lg-9 col-md-10 col-12">
       <div class="mb-3">
-        <h3 class="section-title">注文卓を選択</h3>
-        <div class="card-container row">
-          <div class="col-lg-2 col-md-3 col-4 text-center">
-            <div class="table-card card h-100 shadow-sm <%= order.orderedBy == '卓 1' ? 'selected' : '' %>" onclick="selectTable(this)">
-              <h5 class="card-title my-2"><span class="me-2" id="check-mark">&#10003;</span>卓 1</h5>
-            </div>
-          </div>
-          <div class="col-lg-2 col-md-3 col-4 text-center">
-            <div class="table-card card h-100 shadow-sm <%= order.orderedBy == '卓 2' ? 'selected' : '' %>" onclick="selectTable(this)">
-              <h5 class="card-title my-2"><span class="me-1" id="check-mark">&#10003;</span>卓 2</h5>
-            </div>
-          </div>
-          <div class="col-lg-2 col-md-3 col-4 text-center">
-            <div class="table-card card h-100 shadow-sm <%= order.orderedBy == '卓 3' ? 'selected' : '' %>" onclick="selectTable(this)">
-              <h5 class="card-title my-2"><span class="me-1" id="check-mark">&#10003;</span>卓 3</h5>
-            </div>
-          </div>
-        </div>
+        <h3 class="section-title">注文卓を変更</h3>
+        <%- include('../partials/table') %>
       </div>
 
       <!-- 料理セクション -->
@@ -95,7 +79,7 @@
       </div>
 
       <!-- その他セクション -->
-      <div class="mb-3">
+      <div class="">
         <h3 class="section-title">その他</h3>
         <% if (otherProducts.length) { %>
         <div class="row">
@@ -148,7 +132,7 @@
       <span class="me-auto">合計金額</span><span id="totalPrice" class="ms-auto"></span>
     </div>
     <div class="d-flex justify-content-center mt-0">
-      <button id="confirmBtn" class="btn-success btn">変更</button>
+      <button id="confirmBtn" class="btn-green btn">変更</button>
       <button id="cancelBtn" class="btn-secondary btn">キャンセル</button>
     </div>
   </div>
