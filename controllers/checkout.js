@@ -70,7 +70,6 @@ exports.edit = async (req, res) => {
 exports.update = async (req, res) => {
     const id = req.params.id;
     try {
-        console.log(req.body)
         await Checkout.findByIdAndUpdate(id,req.body);
 
         req.flash('success', '会計情報が更新されました。');

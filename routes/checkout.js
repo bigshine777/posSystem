@@ -11,11 +11,11 @@ router.route('/create')
 
 router.route('/:id')
     .get(catchAsync(checkoutController.show))
-    .put(catchAsync(checkoutController.update))
     .patch(catchAsync(checkoutController.paid))
     .delete(catchAsync(checkoutController.delete));
 
 router.route('/:id/edit')
-    .get(catchAsync(checkoutController.edit));
+    .get(catchAsync(checkoutController.edit))
+    .put(catchAsync(checkoutController.update))
 
 module.exports = router;

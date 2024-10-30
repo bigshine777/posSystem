@@ -40,7 +40,7 @@
     margin: 0 calc(7vw);
 }
 
-.btn {
+.btn-big {
     font-size: 1rem;
     padding: 0.85rem 2rem;
     transition: background-color 0.3s ease, transform 0.3s ease;
@@ -66,4 +66,46 @@
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
     color: #fff;
+}
+
+/* モーダル全体のスタイル（非表示がデフォルト） */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 背景を半透明に */
+}
+
+/* モーダルのコンテンツ */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    /* 上下中央に配置 */
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#confirmBtn {
+    border-radius: 25px;
+    width: 40%;
+    margin-right: 5%;
+    font-size: calc(0.7rem + 0.4vw);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#cancelBtn {
+    border-radius: 25px;
+    width: 40%;
+    margin-left: 5%;
+    font-size: calc(0.7rem + 0.4vw);
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }

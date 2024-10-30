@@ -130,7 +130,7 @@ cancelBtn.onclick = () => {
 confirmBtn.onclick = async () => {
     try {
         const id = document.getElementById('id').dataset.checkoutId;
-        const response = await fetch(`/checkout/${id}`, {
+        const response = await fetch(`/checkout/${id}/edit`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -144,15 +144,14 @@ confirmBtn.onclick = async () => {
             }),
         });
 
+        if (response.redirected) {
+            // リダイレクト先に遷移する
+            window.location.href = response.url;
+            return;
+        }
+
     } catch (err) {
         console.error("Error posting checkout:", err);
-    }
-};
-
-// モーダル外をクリックした場合の処理
-window.onclick = (event) => {
-    if (event.target === checkoutModal) {
-        checkoutModal.style.display = "none";
     }
 };
 
@@ -196,7 +195,9 @@ confirmDeleteBtn.onclick = async () => {
 
 // モーダル外をクリックした場合の処理
 window.onclick = (event) => {
-    if (event.target === deleteModal) {
+    if (event.target === checkoutModal) {
+        checkoutModal.style.display = "none";
+    } else if (event.target === deleteModal) {
         deleteModal.style.display = "none";
     }
 };

@@ -48,7 +48,10 @@ h3 {
     color: #fff;
 }
 
-
+.btn-blue{
+    background: rgb(240, 128, 128);
+    color: #fff;
+}
 
 .card {
     border-radius: 20px;
@@ -62,4 +65,10 @@ img {
     background-color: pink;
     border-radius: 100%;
     padding: calc(1rem + 1vw);
+}
+
+.divider {
+    border-top: 2px solid #e9ecef;
+    margin: 0 auto;
+    width: 80%;
 }
