@@ -1,20 +1,5 @@
 const Order = require("../models/order");
 const Product = require('../models/product');
-const wss = require('../app.js');
-
-// ブロードキャスト関数を定義
-wss.broadcast = function broadcast(data) {
-    if (!wss.clients || wss.clients.size === 0) {
-        console.log('接続中のクライアントがいないため、ブロードキャストは行われません');
-        return;
-    }
-
-    wss.clients.forEach(function each(client) {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(data);
-        }
-    });
-};
 
 // 注文のホームページを表示する（GET）
 exports.index = async (req, res) => {
@@ -50,7 +35,6 @@ exports.createPost = async (req, res) => {
         await newOrder.save(); // ここでawaitを追加
 
         req.flash('success', '新しい注文が作成されました！');
-        wss.broadcast('reload');
         res.redirect('/order');
     } catch (error) {
         req.flash('error', '注文の作成中にエラーが発生しました。');
@@ -92,7 +76,6 @@ exports.update = async (req, res) => {
         }
 
         req.flash('success', '注文が更新されました！');
-        wss.broadcast('reload');
         res.redirect('/order');
     } catch (error) {
         req.flash('error', '注文の更新中にエラーが発生しました。');
@@ -107,7 +90,6 @@ exports.delete = async (req, res) => {
         await Order.findByIdAndDelete(id);
 
         req.flash('success', '注文が削除されました！');
-        wss.broadcast('reload');
         res.redirect('/order');
     } catch (error) {
         req.flash('error', '注文の削除中にエラーが発生しました。');
@@ -131,12 +113,11 @@ exports.toggleIsServed = async (req, res) => {
         await order.save(); // モデルを保存
 
         req.flash('success', `注文が${order.isServed ? 'お届け済み' : '未完了'}に変更されました！`);
-        wss.broadcast('reload');
         res.redirect('/order');
     } catch (error) {
         console.error('Error toggling order status:', error);
         req.flash('error', 'エラーが発生しました。');
-        res.redirect(`/order`);
+        res.redirect(`/order`); 
     }
 };
 

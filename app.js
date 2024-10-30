@@ -37,10 +37,10 @@ app.use(session({
     cookie: { maxAge: 60000 } // クッキーの有効期限(1分)
 }));
 
-const http = require('http');
 const WebSocket = require('ws');
-const server = http.createServer(app); // ExpressアプリをHTTPサーバーとして設定
-const wss = new WebSocket.Server({ server }); // WebSocketサーバーを作成
+const http = require('http');
+const server = http.createServer(app); // HTTPサーバーを作成
+const wss = new WebSocket.Server({ server }); // WebSocketサーバーをHTTPサーバーにバインド
 
 // WebSocket接続が確立された時のイベント
 wss.on('connection', (ws) => {
@@ -53,6 +53,46 @@ wss.on('connection', (ws) => {
 
     // 接続中のクライアントの数を確認
     console.log('現在の接続数:', wss.clients.size);
+});
+
+// WebSocketでクライアントに通知する関数
+function notifyClients(data) {
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            console.log('リロード指示を送信しました');
+            client.send(JSON.stringify(data));
+        }
+    });
+}
+
+// Change Streamの監視
+const db = mongoose.connection;
+const Order = require('./models/order.js');
+const Product = require('./models/product.js'); // Productモデル
+const Checkout = require('./models/checkout.js'); // Checkoutモデル
+
+// Change Streamの監視
+db.once('open', () => {
+    // OrderモデルのChange Stream
+    const orderChangeStream = Order.watch();
+    orderChangeStream.on('change', (change) => {
+        console.log('Orderデータが変更されました:', change);
+        notifyClients({ action: 'reload', source: 'order' }); // どのモデルかを指定
+    });
+
+    // ProductモデルのChange Stream
+    const productChangeStream = Product.watch();
+    productChangeStream.on('change', (change) => {
+        console.log('Productデータが変更されました:', change);
+        notifyClients({ action: 'reload', source: 'product' }); // どのモデルかを指定
+    });
+
+    // CheckoutモデルのChange Stream
+    const checkoutChangeStream = Checkout.watch();
+    checkoutChangeStream.on('change', (change) => {
+        console.log('Checkoutデータが変更されました:', change);
+        notifyClients({ action: 'reload', source: 'checkout' }); // どのモデルかを指定
+    });
 });
 
 // flashの設定
@@ -81,6 +121,10 @@ app.get('/', (req, res) => {
     res.render('home');
 });
 
+app.get('/test', (req, res) => {
+    res.send('ok');
+});
+
 // 404 エラーハンドリング
 app.all('*', (req, res, next) => {
     next(new expressError('ページが見つかりませんでした。', 400));
@@ -96,5 +140,3 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-module.exports.wss = wss;
