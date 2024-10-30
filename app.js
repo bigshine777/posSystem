@@ -59,7 +59,7 @@ wss.on('connection', (ws) => {
 function notifyClients(data) {
     wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
-            console.log('リロード指示を送信しました');
+            console.log('リロード指示を送信しました',client);
             client.send(JSON.stringify(data));
         }
     });
@@ -76,21 +76,21 @@ db.once('open', () => {
     // OrderモデルのChange Stream
     const orderChangeStream = Order.watch();
     orderChangeStream.on('change', (change) => {
-        console.log('Orderデータが変更されました:', change);
+        console.log('Orderデータが変更されました:');
         notifyClients({ action: 'reload', source: 'order' }); // どのモデルかを指定
     });
 
     // ProductモデルのChange Stream
     const productChangeStream = Product.watch();
     productChangeStream.on('change', (change) => {
-        console.log('Productデータが変更されました:', change);
+        console.log('Productデータが変更されました:');
         notifyClients({ action: 'reload', source: 'product' }); // どのモデルかを指定
     });
 
     // CheckoutモデルのChange Stream
     const checkoutChangeStream = Checkout.watch();
     checkoutChangeStream.on('change', (change) => {
-        console.log('Checkoutデータが変更されました:', change);
+        console.log('Checkoutデータが変更されました:');
         notifyClients({ action: 'reload', source: 'checkout' }); // どのモデルかを指定
     });
 });
