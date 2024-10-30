@@ -27,7 +27,7 @@ ws.onmessage = function (event) {
                 }
                 break;
             case 'checkout':
-                if (currentPath === '/checkout' || 'order') {
+                if (currentPath === '/checkout' || '/order') {
                     console.log('Checkoutデータが変更されました。リロードします。');
                     location.reload(); // ページをリロード
                 }
