@@ -37,6 +37,24 @@ app.use(session({
     cookie: { maxAge: 60000 } // クッキーの有効期限(1分)
 }));
 
+const http = require('http');
+const WebSocket = require('ws');
+const server = http.createServer(app); // ExpressアプリをHTTPサーバーとして設定
+const wss = new WebSocket.Server({ server }); // WebSocketサーバーを作成
+
+// WebSocket接続が確立された時のイベント
+wss.on('connection', (ws) => {
+    console.log('WebSocketクライアントが接続しました');
+
+    // メッセージ受信の確認（オプション）
+    ws.on('message', (message) => {
+        console.log('Received message:', message);
+    });
+
+    // 接続中のクライアントの数を確認
+    console.log('現在の接続数:', wss.clients.size);
+});
+
 // flashの設定
 const flash = require('connect-flash');
 app.use(flash());
@@ -56,8 +74,8 @@ const serverRoutes = require('./routes/server.js');
 
 app.use('/order', orderRoutes);
 app.use('/product', productRoutes);
-app.use('/checkout',chcekoutRoutes);
-app.use('/server',serverRoutes);
+app.use('/checkout', chcekoutRoutes);
+app.use('/server', serverRoutes);
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -74,6 +92,9 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err });
 });
 
-app.listen(3000, () => {
-    console.log('ポート3000で待機中...');
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
+
+module.exports.wss = wss;

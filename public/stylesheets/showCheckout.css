@@ -44,8 +44,8 @@
     font-size: 1rem;
     padding: 0.85rem 2rem;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    width: 50%;
-    margin-left: 25%;
+    width: 70%;
+    margin-left: 15%;
     border-radius: 50px;
     /* ボタンの丸み */
 }
