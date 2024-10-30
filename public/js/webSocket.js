@@ -1,5 +1,10 @@
 // WebSocketクライアントの設定
-const ws = new WebSocket(`ws://${window.location.host}`); // 適切なURLを使用
+let ws;
+if (window.location.host == 'localhost:3000') {
+    ws = new WebSocket(`ws://${window.location.host}`); // 適切なURLを使用
+} else {
+    ws = new WebSocket(`wss://${window.location.host}`); // 適切なURLを使用
+}
 
 // WebSocket接続が開かれたとき
 ws.onopen = () => {
