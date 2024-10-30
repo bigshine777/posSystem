@@ -2,21 +2,23 @@ const Order = require("../models/order");
 const Product = require('../models/product');
 const wss = require('../app.js');
 
-// ブロードキャスト関数の定義（すべてのクライアントに通知）
+// ブロードキャスト関数を定義
 wss.broadcast = function broadcast(data) {
-    if (wss.clients) {
-        wss.clients.forEach(function each(client) {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(data);
-            }
-        });
+    if (!wss.clients || wss.clients.size === 0) {
+        console.log('接続中のクライアントがいないため、ブロードキャストは行われません');
+        return;
     }
+
+    wss.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(data);
+        }
+    });
 };
 
 // 注文のホームページを表示する（GET）
 exports.index = async (req, res) => {
     try {
-        console.log(wss);
         const currentOrders = await Order.find({ isServed: false }).populate('products.product');
         const previousOrders = await Order.find({ isServed: true }).populate('products.product');
 
