@@ -13,7 +13,8 @@
               <th scope="col">注文卓</th>
               <th scope="col">注文時間</th>
               <th scope="col">お会計</th>
-              <th scope="col">完了</th>
+              <th scope="col">状態</th>
+              <th scope="col">状態の変更</th>
               <th scope="col">編集</th>
             </tr>
           </thead>
@@ -32,10 +33,11 @@
                 </ul>
               </td>
               <td><%= currentOrders[index].orderedBy %></td>
-              <td><%= new Date(currentOrders[index].createdAt).toLocaleDateString("ja-JP", { month: "short", day: "numeric" }) %> <%= new Date(currentOrders[index].createdAt).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" }) %></td>
+              <td><%= new Date(currentOrders[index].createdAt).toLocaleDateString("ja-JP", { timeZone: "Asia/Tokyo",month: "short", day: "numeric" }) %> <%= new Date(currentOrders[index].createdAt).toLocaleTimeString("ja-JP", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit" }) %>
               <td><%= currentOrders[index].totalPrice %></td>
+              <td>準備中</td>
               <td>
-                <form action="/order/<%= currentOrders[index]._id %>?_method=PATCH" method="POST"><button class="btn btn-warning">完了</button></form>
+                <form action="/order/<%= currentOrders[index]._id %>?_method=PATCH" method="POST"><button class="btn btn-warning">完了にする</button></form>
               </td>
               <td><a href="/order/<%= currentOrders[index]._id %>" class="btn btn-success">編集</a></td>
             </tr>
@@ -60,7 +62,8 @@
               <th scope="col">注文卓</th>
               <th scope="col">注文時間</th>
               <th scope="col">お会計</th>
-              <th scope="col">未完了</th>
+              <th scope="col">状態</th>
+              <th scope="col">状態の変更</th>
               <th scope="col">編集</th>
             </tr>
           </thead>
@@ -79,13 +82,16 @@
                 </ul>
               </td>
               <td><%= previousOrders[index].orderedBy %></td>
-              <td><%= new Date(previousOrders[index].createdAt).toLocaleDateString("ja-JP", { month: "short", day: "numeric" }) %> <%= new Date(previousOrders[index].createdAt).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" }) %></td>
+              <td><%= new Date(previousOrders[index].createdAt).toLocaleDateString("ja-JP", { timeZone: "Asia/Tokyo", month: "short", day: "numeric" }) %> <%= new Date(previousOrders[index].createdAt).toLocaleTimeString("ja-JP", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit" }) %></td>
               <td><%= previousOrders[index].totalPrice %></td>
+              <td>
+                お届け済
+              </td>
               <td>
                 <% if (previousOrders[index].isPaid) { %>
                 <button class="btn btn-primary" disabled>会計済</button>
                 <% }else{ %>
-                <form action="/order/<%= previousOrders[index]._id %>?_method=PATCH" method="POST"><button class="btn btn-danger">未完了</button></form>
+                <form action="/order/<%= previousOrders[index]._id %>?_method=PATCH" method="POST"><button class="btn btn-danger">未完了にする</button></form>
                 <% } %>
               </td>
               <td><a href="/order/<%= previousOrders[index]._id %>" class="btn btn-success">編集</a></td>
