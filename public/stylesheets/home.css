@@ -61,10 +61,17 @@ h3 {
 img {
     width: calc(10rem + 10vw);
     height: calc(10rem + 10vw);
-    margin-bottom: 15px;
-    background-color: pink;
-    border-radius: 100%;
     padding: calc(1rem + 1vw);
+    margin: 15px;
+}
+
+.img-div{
+    width: calc(12rem + 10vw);
+    height: calc(12rem + 10vw);
+    border-radius: 100%;
+    background-color: pink;
+    margin: auto;
+    margin-bottom: 15px;
 }
 
 .divider {
