@@ -8,3 +8,7 @@ exports.getAllOrders = async (req, res) => {
         res.status(500).json({ error: "Failed to fetch orders" });
     }
 };
+
+exports.check = async (req, res) => {
+    res.send('サーバーOK');
+};
