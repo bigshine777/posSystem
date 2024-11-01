@@ -25,6 +25,12 @@ exports.createPost = async (req, res) => {
         const newCheckout = new Checkout(req.body);
         await newCheckout.save();
 
+        for (let orderId of req.body.orders) {
+            const order = await Order.findById(orderId);
+            order.isPaid = true;
+            await order.save();
+        }
+
         // 成功時のフラッシュメッセージとリダイレクト
         req.flash('success', '会計の確定が完了しました');
         res.redirect(`/checkout/${newCheckout._id}`);
@@ -101,12 +107,6 @@ exports.paid = async (req, res) => {
         const checkout = await Checkout.findById(id).populate('products.product');
         checkout.isPaid = true;
         await checkout.save();
-
-        for (let orderId of checkout.orders) {
-            const order = await Order.findById(orderId);
-            order.isPaid = true;
-            await order.save();
-        }
 
         req.flash('success', '会計が完了しました。');
         res.redirect('/checkout');
