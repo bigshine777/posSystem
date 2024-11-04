@@ -9,6 +9,8 @@ router.route('/create')
     .get(catchAsync(checkoutController.create))
     .post(catchAsync(checkoutController.createPost));
 
+router.post('/sendEmail/:date', checkoutController.sendEmail);
+
 router.route('/:id')
     .get(catchAsync(checkoutController.show))
     .patch(catchAsync(checkoutController.paid))

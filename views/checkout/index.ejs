@@ -3,6 +3,17 @@
 <div class="container" id="orderBlock">
   <div class="row d-flex justify-content-center">
     <div class="col-lg-8 col-md-10 col-12">
+      <form action="/checkout" method="GET" class="mb-4 d-flex flex-column flex-md-row align-items-md-end">
+        <div class="me-2 col-12 col-md-auto">
+          <label for="date" class="form-label">日付を選択:</label>
+          <input type="date" id="date" name="date" class="form-control" value="<%= date ? date.toISOString().slice(0, 10) : ''%>">
+        </div>
+        <button type="submit" class="btn btn-blue col-12 col-md-auto mt-2 mt-md-0">検索</button>
+        <p class="col-12 col-md-auto ms-md-auto mt-2 mt-md-0" id="sendExcel">
+          <%= date ? date.toISOString().slice(0, 10) : 'すべて' %>の会計情報をExcelに保存
+        </p>
+      </form>
+
       <h3 class="mb-0">未支払いの会計</h3>
       <div class="table-responsive">
         <table class="table">
@@ -17,14 +28,14 @@
             </tr>
           </thead>
           <tbody>
-            <% if (unpaidCheckouts.length>0) { %>
-            <% for( let index = 0; index < unpaidCheckouts.length; index++ ) { %>
+            <% if (unpaidCheckouts.length > 0) { %>
+            <% for (let index = 0; index < unpaidCheckouts.length; index++) { %>
             <tr>
               <th scope="row"><%= index + 1 %></th>
               <td>
                 <ul class="productList">
-                  <% for( let unpaidCheckoutProduct of unpaidCheckouts[index].products) { %>
-                  <% for( let index = 0; index < unpaidCheckoutProduct.quantity; index++ ) { %>
+                  <% for (let unpaidCheckoutProduct of unpaidCheckouts[index].products) { %>
+                  <% for (let i = 0; i < unpaidCheckoutProduct.quantity; i++) { %>
                   <li><%= unpaidCheckoutProduct.product.name %></li>
                   <% } %>
                   <% } %>
@@ -59,14 +70,14 @@
             </tr>
           </thead>
           <tbody>
-            <% if (paidCheckouts.length>0) { %>
-            <% for( let index = paidCheckouts.length-1; index >=0; index-- ) { %>
+            <% if (paidCheckouts.length > 0) { %>
+            <% for (let index = paidCheckouts.length - 1; index >= 0; index--) { %>
             <tr>
-              <th scope="row"><%= paidCheckouts.length-index %></th>
+              <th scope="row"><%= paidCheckouts.length - index %></th>
               <td>
                 <ul class="productList">
-                  <% for( let paidCheckoutProduct of paidCheckouts[index].products) { %>
-                  <% for( let index = 0; index < paidCheckoutProduct.quantity; index++ ) { %>
+                  <% for (let paidCheckoutProduct of paidCheckouts[index].products) { %>
+                  <% for (let i = 0; i < paidCheckoutProduct.quantity; i++) { %>
                   <li><%= paidCheckoutProduct.product.name %></li>
                   <% } %>
                   <% } %>
@@ -89,4 +100,22 @@
   </div>
 </div>
 
-<link rel="stylesheet" href="/stylesheets/showOrder.css">
+<div id="sendExcelModal" class="modal">
+  <div class="modal-content">
+    <h3 class="modal-title mb-3">会計情報の送信 (Excel)</h3>
+    <form action="/checkout/sendEmail/<%= date ? date : 'all' %>" method="POST">
+      <div class="form-group">
+        <label for="email" class="form-label">メールアドレス</label>
+        <input name="email" type="email" class="form-control mb-3" placeholder="your-email@example.com" required>
+      </div>
+
+      <div class="button-group">
+        <button id="confirmBtn" class="btn btn-danger" type="submit">送信</button>
+        <button id="cancelBtn" class="btn btn-secondary" type="button">キャンセル</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<link rel="stylesheet" href="/stylesheets/showCheckoutsList.css">
+<script src="/js/showCheckoutsList.js"></script>

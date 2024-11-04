@@ -59,7 +59,6 @@ wss.on('connection', (ws) => {
 function notifyClients(data) {
     wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
-            console.log('リロード指示を送信しました',client);
             client.send(JSON.stringify(data));
         }
     });

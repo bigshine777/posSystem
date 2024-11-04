@@ -2,12 +2,40 @@ const Checkout = require('../models/checkout');
 const Product = require('../models/product');
 const Order = require('../models/order');
 
+const { exportCheckoutToExcel, sendEmailWithAttachment } = require('../utils/writeExcel.js');
+
 exports.index = async (req, res) => {
     try {
-        const paidCheckouts = await Checkout.find({ isPaid: true }).populate('products.product');
-        const unpaidCheckouts = await Checkout.find({ isPaid: false }).populate('products.product');
+        // リクエストから日付を取得し、フォーマットを調整
+        const date = req.query.date ? new Date(req.query.date) : undefined;
+        let paidCheckouts, unpaidCheckouts;
 
-        res.render('checkout/index', { paidCheckouts, unpaidCheckouts });
+        if (date) {
+            // 日付を始まりと終わりの範囲に設定
+            const startOfDay = new Date(date.setHours(0, 0, 0, 0));
+            const endOfDay = new Date(date.setHours(23, 59, 59, 999));
+
+            // 支払い済みと未払いのチェックアウトを日付範囲で取得
+            paidCheckouts = await Checkout.find({
+                isPaid: true,
+                createdAt: { $gte: startOfDay, $lte: endOfDay }
+            }).populate('products.product');
+
+            unpaidCheckouts = await Checkout.find({
+                isPaid: false,
+                createdAt: { $gte: startOfDay, $lte: endOfDay }
+            }).populate('products.product');
+        } else {
+            paidCheckouts = await Checkout.find({
+                isPaid: true,
+            }).populate('products.product');
+
+            unpaidCheckouts = await Checkout.find({
+                isPaid: false,
+            }).populate('products.product');
+        }
+
+        res.render('checkout/index', { paidCheckouts, unpaidCheckouts, date });
     } catch (error) {
         console.error('Error fetching checkouts:', error);
         req.flash('error', '会計情報の取得に失敗しました。');
@@ -76,7 +104,7 @@ exports.edit = async (req, res) => {
 exports.update = async (req, res) => {
     const id = req.params.id;
     try {
-        await Checkout.findByIdAndUpdate(id,req.body);
+        await Checkout.findByIdAndUpdate(id, req.body);
 
         req.flash('success', '会計情報が更新されました。');
         res.redirect(`/checkout/${id}`);
@@ -115,4 +143,35 @@ exports.paid = async (req, res) => {
         req.flash('error', '支払い処理に失敗しました。');
         res.redirect(`/checkout/${id}`);
     }
+};
+
+exports.sendEmail = async (req, res) => {
+    const { date } = req.params;
+    const { email } = req.body;
+    let checkouts;
+
+    if (date === 'all') {
+        // 全ての支払済みデータを取得
+        checkouts = await Checkout.find({ isPaid: true }).populate('products.product');
+    } else {
+        // 特定の日付の支払済みデータを取得
+        const targetDate = new Date(date);
+        const startOfDay = new Date(targetDate.setHours(0, 0, 0, 0));
+        const endOfDay = new Date(targetDate.setHours(23, 59, 59, 999));
+
+        checkouts = await Checkout.find({
+            isPaid: true,
+            createdAt: { $gte: startOfDay, $lt: endOfDay }
+        }).populate('products.product');
+    }
+
+    if (checkouts.length) {
+        const path = await exportCheckoutToExcel(checkouts, date);
+        await sendEmailWithAttachment(path,email);
+        req.flash('success', '会計情報のExcelファイルを送信しました');
+    } else {
+        req.flash('error', '会計情報がまだ存在しません');
+    }
+
+    res.redirect('/checkout');
 };

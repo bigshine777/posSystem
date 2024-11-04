@@ -1,0 +1,203 @@
+/* 基本スタイル */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* ボタン */
+.btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn-blue {
+    background-color: rgb(27, 215, 24);
+}
+
+.btn-warning {
+    background-color: #ffca28;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #ffb300;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #b12323;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+}
+
+.btn-success {
+    background-color: #31b937;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #29a32f;
+}
+
+/* 全体のコンテナ */
+#orderBlock {
+    background-color: rgb(255, 221, 227);
+    color: #333;
+}
+
+.container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* タイトル */
+h3, .modal-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* テーブル */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table-responsive table {
+    min-width: 100%;
+}
+
+.table {
+    margin-top: 10px;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.table thead th {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border: none;
+}
+
+.table tbody tr {
+    background-color: #fdfdfd;
+    transition: transform 0.2s ease-in-out;
+    border-radius: 8px;
+}
+
+.table tbody tr:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table td, .table th {
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* 注文リスト */
+ul.productList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.productList li {
+    background-color: #beecf3;
+    margin: 2px 0;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+/* リンク */
+#sendExcel {
+    text-decoration-line: none;
+    color: #ffb300;
+    transition: color 0.1s;
+}
+
+#sendExcel:hover {
+    color: #de9e08;
+}
+
+/* モーダル全体のスタイル（非表示がデフォルト） */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 背景を半透明に */
+}
+
+/* モーダルのコンテンツ */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    /* 上下中央に配置 */
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* フォーム */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* ボタン配置 */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+#confirmBtn, #cancelBtn {
+    width: 45%;
+    font-size: calc(0.7rem + 0.4vw);
+    border-radius: 25px;
+}
