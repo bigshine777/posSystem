@@ -42,7 +42,18 @@
                 </ul>
               </td>
               <td><%= unpaidCheckouts[index].checkoutedBy %></td>
-              <td><%= new Date(unpaidCheckouts[index].createdAt).toLocaleDateString("ja-JP", { month: "short", day: "numeric" }) %> <%= new Date(unpaidCheckouts[index].createdAt).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" }) %></td>
+              <td>
+                <%= new Date(unpaidCheckouts[index].createdAt).toLocaleDateString("ja-JP", { 
+                  timeZone: "Asia/Tokyo", 
+                  month: "short", 
+                  day: "numeric" 
+                }) %>
+                <%= new Date(unpaidCheckouts[index].createdAt).toLocaleTimeString("ja-JP", { 
+                  timeZone: "Asia/Tokyo", 
+                  hour: "2-digit", 
+                  minute: "2-digit" 
+                }) %>
+              </td>
               <td><%= unpaidCheckouts[index].totalPrice %></td>
               <td><a href="/checkout/<%= unpaidCheckouts[index]._id %>" class="btn btn-danger">支払い</a></td>
             </tr>
@@ -84,7 +95,18 @@
                 </ul>
               </td>
               <td><%= paidCheckouts[index].checkoutedBy %></td>
-              <td><%= new Date(paidCheckouts[index].createdAt).toLocaleDateString("ja-JP", { month: "short", day: "numeric" }) %> <%= new Date(paidCheckouts[index].createdAt).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" }) %></td>
+              <td>
+                <%= new Date(paidCheckouts[index].createdAt).toLocaleDateString("ja-JP", { 
+                  timeZone: "Asia/Tokyo", 
+                  month: "short", 
+                  day: "numeric" 
+                }) %>
+                <%= new Date(paidCheckouts[index].createdAt).toLocaleTimeString("ja-JP", { 
+                  timeZone: "Asia/Tokyo", 
+                  hour: "2-digit", 
+                  minute: "2-digit" 
+                }) %>
+              </td>
               <td><%= paidCheckouts[index].totalPrice %></td>
             </tr>
             <% } %>
