@@ -53,7 +53,7 @@ async function exportCheckoutToExcel(checkouts, date) {
 }
 
 // Excelファイルをメールで送信する関数
-async function sendEmailWithAttachment(datetime,email) {
+async function sendEmailWithAttachment(datetime, email) {
     const filePath = `${datetime}Accounting.xlsx`;
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -66,8 +66,8 @@ async function sendEmailWithAttachment(datetime,email) {
     const mailOptions = {
         from: 'daichi.bigshine777@gmail.com',
         to: email,
-        subject: `${datetime}の会計情報`,
-        text: `添付ファイルに${datetime}の会計情報があります。`,
+        subject: `${datetime === 'all' ? 'すべて' : datetime}の会計情報`,
+        text: `添付ファイルに${datetime === 'all' ? 'すべて' : datetime}の会計情報があります。`,
         attachments: [
             {
                 filename: filePath,
