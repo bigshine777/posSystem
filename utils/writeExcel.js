@@ -23,7 +23,8 @@ async function exportCheckoutToExcel(checkouts, date) {
             .map(p => `${p.product.name}×${p.quantity}`)
             .join('\n');
 
-        const createdAtFormatted = new Date(checkout.createdAt).toLocaleString("ja-JP", {
+        const createdAtDate = new Date(checkout.createdAt);
+        const createdAtFormatted = createdAtDate.toLocaleString("ja-JP", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit",
