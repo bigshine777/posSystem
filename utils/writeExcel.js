@@ -25,6 +25,7 @@ async function exportCheckoutToExcel(checkouts, date) {
 
         const createdAtDate = new Date(checkout.createdAt);
         const createdAtFormatted = createdAtDate.toLocaleString("ja-JP", {
+            timeZone: "Asia/Tokyo",  // JSTタイムゾーンを指定
             year: "numeric",
             month: "2-digit",
             day: "2-digit",
