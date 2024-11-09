@@ -1,4 +1,4 @@
-.container{
+.container {
     background-color: rgb(255, 221, 227);
     border-radius: 10px;
     padding: 3%;
@@ -48,4 +48,8 @@
 .card-body h5 {
     margin-bottom: 10px;
     font-size: calc(0.5vw + 0.7rem);
+}
+
+.product-description {
+    font-size: calc(0.4vw + 0.65rem);
 }

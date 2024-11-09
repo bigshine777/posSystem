@@ -49,6 +49,16 @@
               </div>
             </div>
 
+            <div class="mb-4">
+              <label for="description" class="form-label fw-bold">備考欄</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-pencil-alt"></i> <!-- アイコン -->
+                </span>
+                <textarea name="description" class="form-control" placeholder="説明を入力" rows="3" required><%= product.description %></textarea>
+              </div>
+            </div>
+
             <button type="submit" class="btn btn-success w-100 py-2">
               <i class="bi bi-check-circle-fill"></i> 変更
             </button>

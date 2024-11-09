@@ -12,6 +12,10 @@ const productSchema = mongoose.Schema({
         min: [0, '価格は0以上である必要があります'] // 最小値を0に制限
     },
     category: String,
+    description :{
+        type : String,
+        trim: true // 前後の空白を自動で削除
+    }
 });
 
 const Product = mongoose.model('Product', productSchema);

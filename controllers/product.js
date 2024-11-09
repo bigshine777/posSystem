@@ -22,8 +22,8 @@ exports.create = (req, res) => {
 // 新規注文を保存する（POST）
 exports.createPost = async (req, res) => {
     try {
-        const { name, price, category } = req.body;
-        const newProduct = new Product({ name, price, category });
+        const { name, price, category, description } = req.body;
+        const newProduct = new Product({ name, price, category, description });
         await newProduct.save();
 
         req.flash('success', 'メニューが追加されました');
@@ -56,8 +56,8 @@ exports.edit = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, price, category } = req.body;
-        await Product.findByIdAndUpdate(id, { name, price, category });
+        const { name, price, category, description } = req.body;
+        await Product.findByIdAndUpdate(id, { name, price, category, description });
 
         req.flash('success', 'メニューが更新されました');
         res.redirect('/product');
