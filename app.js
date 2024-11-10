@@ -110,11 +110,13 @@ const orderRoutes = require('./routes/order.js');
 const productRoutes = require('./routes/product.js');
 const chcekoutRoutes = require('./routes/checkout.js');
 const serverRoutes = require('./routes/server.js');
+const maidRoutes = require('./routes/maid.js');
 
 app.use('/order', orderRoutes);
 app.use('/product', productRoutes);
 app.use('/checkout', chcekoutRoutes);
 app.use('/server', serverRoutes);
+app.use('/maid', maidRoutes);
 
 app.get('/', (req, res) => {
     res.render('home');

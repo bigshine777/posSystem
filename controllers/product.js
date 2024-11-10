@@ -1,4 +1,9 @@
 const Product = require("../models/product");
+const multer = require('multer');
+
+// multer の設定：メモリストレージを使用して画像をバッファに保存
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // 注文のホームページを表示する（GET）
 exports.index = async (req, res) => {
@@ -20,19 +25,31 @@ exports.create = (req, res) => {
 };
 
 // 新規注文を保存する（POST）
-exports.createPost = async (req, res) => {
-    try {
-        const { name, price, category, description } = req.body;
-        const newProduct = new Product({ name, price, category, description });
-        await newProduct.save();
+exports.createPost = [
+    upload.single('image'),  // 'image' はフォームのファイルフィールド名
+    async (req, res) => {
+        try {
+            const { name, price, category, description } = req.body;
 
-        req.flash('success', 'メニューが追加されました');
-        res.redirect('/product');
-    } catch (err) {
-        req.flash('error', 'メニュー追加に失敗しました');
-        res.redirect('/product/new');
+            // 画像データをバッファとして受け取り、Product スキーマに保存
+            const newProduct = new Product({
+                name,
+                price,
+                category,
+                description,
+                image: req.file ? req.file.buffer : null  // 画像がある場合のみ保存
+            });
+
+            await newProduct.save();
+
+            req.flash('success', 'メニューが追加されました');
+            res.redirect('/product');
+        } catch (err) {
+            req.flash('error', 'メニュー追加に失敗しました');
+            res.redirect('/product/new');
+        }
     }
-};
+];
 
 // メニュー編集ページを表示する（GET）
 exports.edit = async (req, res) => {
@@ -40,12 +57,18 @@ exports.edit = async (req, res) => {
         const { id } = req.params;
         const product = await Product.findById(id);
 
+        let imageData = null;
+
+        if (product.image) {
+            imageData = `data:image/jpeg;base64,${product.image.toString('base64')}`;
+        }
+
         if (!product) {
             req.flash('error', '該当するメニューが見つかりません');
             return res.redirect('/product');
         }
 
-        res.render('product/edit', { product });
+        res.render('product/edit', { product, imageData });
     } catch (err) {
         req.flash('error', 'メニューの取得に失敗しました');
         res.redirect('/product');
@@ -53,19 +76,35 @@ exports.edit = async (req, res) => {
 };
 
 // メニューを更新する（POST）
-exports.update = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { name, price, category, description } = req.body;
-        await Product.findByIdAndUpdate(id, { name, price, category, description });
+exports.update = [
+    upload.single('image'),  // 'image' はフォームのファイルフィールド名
+    async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { name, price, category, description } = req.body;
 
-        req.flash('success', 'メニューが更新されました');
-        res.redirect('/product');
-    } catch (err) {
-        req.flash('error', 'メニューの更新に失敗しました');
-        res.redirect(`/product/${id}`);
+            // 画像がアップロードされている場合、新しい画像データを保存
+            const updatedProduct = {
+                name,
+                price,
+                category,
+                description,
+                // 画像がアップロードされた場合は新しい画像に更新
+                image: req.file ? req.file.buffer : undefined
+            };
+
+            // 画像が更新されていない場合、image プロパティを上書きしない
+            // つまり、画像がアップロードされていない場合は、既存の画像を保持
+            await Product.findByIdAndUpdate(id, updatedProduct);
+
+            req.flash('success', 'メニューが更新されました');
+            res.redirect('/product');
+        } catch (err) {
+            req.flash('error', 'メニューの更新に失敗しました');
+            res.redirect(`/product/${id}`);
+        }
     }
-};
+];
 
 // メニューを削除する（POST）
 exports.delete = async (req, res) => {

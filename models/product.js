@@ -15,7 +15,10 @@ const productSchema = mongoose.Schema({
     description :{
         type : String,
         trim: true // 前後の空白を自動で削除
-    }
+    },
+    image: {
+        type: Buffer, // 画像はバイナリデータとして保存
+    },
 });
 
 const Product = mongoose.model('Product', productSchema);

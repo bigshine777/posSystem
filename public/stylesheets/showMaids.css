@@ -1,0 +1,70 @@
+.container {
+    background-color: rgb(255, 221, 227);
+    border-radius: 10px;
+    padding: 3%;
+}
+
+/* セクションタイトルのスタイル */
+.section-title {
+    font-weight: bold;
+    font-size: calc(1rem+1vw);
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* 商品カードのスタイル */
+.product-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* カードのホバーエフェクト */
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+/* 価格テキストのスタイル */
+.price-text {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ff6347;
+    margin-bottom: 15px;
+}
+
+/* ボタンの調整 */
+.btn-success {
+    border-radius: 20px;
+}
+
+/* カード内の要素の間隔を統一 */
+.card-body h5 {
+    margin-bottom: 10px;
+}
+
+.card-body h5 {
+    margin-bottom: 10px;
+    font-size: calc(0.5vw + 0.7rem);
+}
+
+.product-description {
+    font-size: calc(0.4vw + 0.65rem);
+}
+
+.profileImage {
+    width: 100%;
+    height: auto;
+    max-height: 100%; /* 親要素の高さに制限 */
+    object-fit: cover; /* 画像が枠に合うように拡大/縮小してトリミング */
+    border-radius: 8px; /* 角を丸める場合 */
+}
+
+.card-title{
+    font-size: calc(1.5vw + 2rem);
+    font-weight: bold;
+    color: rgba(227, 24, 200, 0.75);
+}
+

@@ -7,7 +7,7 @@
                     <div class="card-body px-5 pb-3">
                         <h3 class="card-title text-center mb-4 fw-bold">メニュー追加</h3>
 
-                        <form action="/product/create" method="POST">
+                        <form action="/product/create" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="name" class="form-label fw-bold">メニュー名</label>
                                 <div class="input-group">
@@ -54,12 +54,19 @@
                             </div>
 
                             <div class="mb-4">
+                                <label for="imageUpload" class="form-label fw-bold">写真やアイコン</label>
+                                <div class="input-group">
+                                    <input type="file" name="image" id="imageUpload" class="form-control" accept="image/*">
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
                                 <label for="description" class="form-label fw-bold">備考欄</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="fas fa-pencil-alt"></i> <!-- アイコン -->
                                     </span>
-                                    <textarea name="description" class="form-control" placeholder="説明を入力" rows="3" required></textarea>
+                                    <textarea name="description" class="form-control" placeholder="説明を入力" rows="3"></textarea>
                                 </div>
                             </div>                                                                                   
 
