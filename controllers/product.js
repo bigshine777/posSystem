@@ -8,11 +8,12 @@ const upload = multer({ storage: storage });
 // 注文のホームページを表示する（GET）
 exports.index = async (req, res) => {
     try {
+        const setProducts = await Product.find({ category: 'set' });
         const foodProducts = await Product.find({ category: 'food' });
         const drinkProducts = await Product.find({ category: 'drink' });
         const otherProducts = await Product.find({ category: 'others' });
 
-        res.render('product/index', { foodProducts, drinkProducts, otherProducts });
+        res.render('product/index', { setProducts, foodProducts, drinkProducts, otherProducts });
     } catch (err) {
         req.flash('error', 'メニューの取得に失敗しました');
         res.redirect('/');
@@ -116,4 +117,20 @@ exports.delete = async (req, res) => {
         req.flash('error', 'メニューの削除に失敗しました');
     }
     res.redirect('/product');
+};
+
+// 画像を削除する（POST）
+exports.deleteImage = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const product = await Product.findById(id);
+
+        product.image = null;
+        await product.save();
+
+        req.flash('success', '画像の削除が完了しました');
+    } catch (err) {
+        req.flash('error', '画像の削除に失敗しました');
+    }
+    res.redirect(`/product/${id}`);
 };

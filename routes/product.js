@@ -14,4 +14,7 @@ router.route('/:id')
     .put((productController.update))
     .delete(catchAsync(productController.delete))
 
+router.route('/:id/delete-image')
+    .delete(catchAsync(productController.deleteImage))
+
 module.exports = router;

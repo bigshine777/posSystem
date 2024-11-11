@@ -4,6 +4,26 @@
   <div class="row d-flex justify-content-center">
     <div class="col-lg-9 col-md-10 col-11 pt-3">
       <div class="mb-3">
+        <h3 class="section-title">セット</h3>
+        <% if (setProducts.length) { %>
+        <div class="row">
+          <% for (let setProduct of setProducts) { %>
+          <div class="col-lg-3 col-md-4 col-6 mb-4">
+            <div class="card product-card h-100 shadow-sm">
+              <div class="card-body text-center">
+                <h5 class="card-title"><%= setProduct.name %></h5>
+                <p class="card-text price-text mb-1">¥ <%= setProduct.price %></p>
+                <p class="product-description mt-0"><%= setProduct.description %></p>
+                <a href="/product/<%= setProduct._id %>" class="btn btn-success">編集</a>
+              </div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+
+      <div class="mb-3">
         <h3 class="section-title">料理</h3>
         <% if (foodProducts.length) { %>
         <div class="row">
