@@ -10,7 +10,7 @@
           <form action="/maid/create" method="POST" enctype="multipart/form-data">
             <!-- メイド名 -->
             <div class="mb-3">
-              <label for="name" class="form-label fw-bold">メイド名(ひらがな)*</label>
+              <label for="name" class="form-label fw-bold">メイド名(ひらがな6文字まで)*</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-person"></i></span>
                 <input type="text" name="name" class="form-control" placeholder="メイド名を入力" required>
@@ -19,7 +19,7 @@
 
             <!-- クラス番号 -->
             <div class="mb-3">
-              <label for="classNumber" class="form-label fw-bold">クラス番号*</label>
+              <label for="classNumber" class="form-label fw-bold">クラス番号(シフト表参照)*</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-sort-numeric-up"></i></span>
                 <select name="classNumber" class="form-control" required>
