@@ -14,6 +14,7 @@
         <% if (foodProducts.length) { %>
         <div class="row">
           <% for (let foodProduct of foodProducts) { %>
+            <% if(foodProduct.name === 'ハーフ&ハーフ'){continue;} %>
           <div class="col-lg-3 col-md-4 col-6 mb-4">
             <div class="card product-card h-100 shadow-sm">
               <div class="card-body text-center">
