@@ -106,6 +106,10 @@ exports.update = async (req, res) => {
     try {
         await Checkout.findByIdAndUpdate(id, req.body);
 
+        const checkout = await Checkout.findById(id);
+        checkout.coupon = '';
+        await checkout.save();
+
         req.flash('success', '会計情報が更新されました。');
         res.redirect(`/checkout/${id}`);
     } catch (error) {
@@ -167,11 +171,56 @@ exports.sendEmail = async (req, res) => {
 
     if (checkouts.length) {
         const path = await exportCheckoutToExcel(checkouts, date);
-        await sendEmailWithAttachment(path,email);
+        await sendEmailWithAttachment(path, email);
         req.flash('success', '会計情報のExcelファイルを送信しました');
     } else {
         req.flash('error', '会計情報がまだ存在しません');
     }
 
     res.redirect('/checkout');
+};
+
+exports.coupon = async (req, res) => {
+    const { coupon, id } = req.params;
+    const checkout = await Checkout.findById(id);
+
+    let couponText;
+    if (checkout.coupon === 'tenpercent') {
+        couponText = '10%引き';
+    } else if (checkout.coupon === '100yen') {
+        couponText = '100円引き';
+    }
+
+    if (checkout.coupon === coupon) {
+        // 同じクーポンコードが再適用された場合、クーポンを無効化して元の価格に戻す
+        if (coupon === 'tenpercent') {
+            checkout.totalPrice = checkout.totalPrice / 0.9;
+        } else if (coupon === '100yen') {
+            checkout.totalPrice = checkout.totalPrice + 100;
+        }
+        checkout.coupon = ''; // クーポンを無効化
+        await checkout.save();
+        req.flash('success', `${couponText}クーポンが取り消されました`);
+    } else {
+        if (checkout.coupon === 'tenpercent') {
+            checkout.totalPrice = checkout.totalPrice / 0.9;
+        } else if (checkout.coupon === '100yen') {
+            checkout.totalPrice = checkout.totalPrice + 100;
+        }
+
+        if (coupon === 'tenpercent') {
+            checkout.totalPrice = Math.max(checkout.totalPrice * 0.9, 0); // 最低価格を0に制限
+            couponText = '10%引き';
+        } else if (coupon === '100yen') {
+            checkout.totalPrice = Math.max(checkout.totalPrice - 100, 0); // 最低価格を0に制限
+            couponText = '100円引き';
+        }
+
+        checkout.coupon = coupon;
+        await checkout.save();
+
+        req.flash('success', `${couponText}クーポンが適用されました`);
+    }
+
+    res.redirect(`/checkout/${id}`);
 };

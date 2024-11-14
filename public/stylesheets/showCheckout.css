@@ -109,3 +109,36 @@
     font-size: calc(0.7rem + 0.4vw);
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
+.btn-discount{
+    border-radius: 10px;
+    border: 3px solid #23b131;
+    color: #23b131;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-discount:hover{
+    color: #23b131;
+}
+
+.btn-discount.active{
+    border-radius: 10px;
+    border: 3px solid #23b131;
+    background-color: #23b131;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-discount.active:hover{
+    color: white;
+}
+
+form{
+    display: inline;
+    margin-right: 5px;
+}
+
+.displayFormBlock{
+    display: flex;
+    justify-content: center;
+}

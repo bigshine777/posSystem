@@ -9,6 +9,14 @@
         <h4 class="text-center mb-2">お支払い</h4>
         <hr class="divider">
         <h1 class="text-center fw-bold mt-2 total-price">¥<%= checkout.totalPrice.toLocaleString() %></h1>
+        <div class="displayFormBlock">
+          <form action="/checkout/<%= checkout._id %>/coupon/tenpercent" method="POST">
+            <button class="btn btn-discount <%= checkout.coupon === 'tenpercent' ? 'active' : '' %>" type="submit">10%引き</button>
+          </form>
+          <form action="/checkout/<%= checkout._id %>/coupon/100yen" method="POST">
+            <button class="btn btn-discount <%= checkout.coupon === '100yen' ? 'active' : '' %>" type="submit">100円引き</button>
+          </form>
+        </div>
       </div>
       <hr class="divider mt-0">
       <div class="checkout-items">

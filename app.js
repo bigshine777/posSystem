@@ -11,8 +11,8 @@ const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
 app.engine('ejs', engineMate);
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));  // 例えば 10MB に設定
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const dbURI = process.env.DB_URI;

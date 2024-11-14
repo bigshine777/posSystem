@@ -31,7 +31,10 @@ const CheckoutSchema = mongoose.Schema({
     orders: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order',
-    }]
+    }],
+    coupon : {
+        type : String,
+    }
 });
 
 const Checkout = mongoose.model('Checkout', CheckoutSchema);

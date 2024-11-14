@@ -20,4 +20,7 @@ router.route('/:id/edit')
     .get(catchAsync(checkoutController.edit))
     .put(catchAsync(checkoutController.update))
 
+router.route('/:id/coupon/:coupon')
+    .post(catchAsync(checkoutController.coupon))
+
 module.exports = router;
