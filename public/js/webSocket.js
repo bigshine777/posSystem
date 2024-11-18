@@ -25,18 +25,6 @@ ws.onmessage = function (event) {
                     location.reload(); // ページをリロード
                 }
                 break;
-            case 'product':
-                if (currentPath === '/product') {
-                    console.log('Productデータが変更されました。リロードします。');
-                    location.reload(); // ページをリロード
-                }
-                break;
-            case 'checkout':
-                if (currentPath === '/checkout' || '/order') {
-                    console.log('Checkoutデータが変更されました。リロードします。');
-                    location.reload(); // ページをリロード
-                }
-                break;
             default:
                 console.log('不明なソース:', data.source);
         }

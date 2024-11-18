@@ -78,20 +78,6 @@ db.once('open', () => {
         console.log('Orderデータが変更されました:');
         notifyClients({ action: 'reload', source: 'order' }); // どのモデルかを指定
     });
-
-    // ProductモデルのChange Stream
-    const productChangeStream = Product.watch();
-    productChangeStream.on('change', (change) => {
-        console.log('Productデータが変更されました:');
-        notifyClients({ action: 'reload', source: 'product' }); // どのモデルかを指定
-    });
-
-    // CheckoutモデルのChange Stream
-    const checkoutChangeStream = Checkout.watch();
-    checkoutChangeStream.on('change', (change) => {
-        console.log('Checkoutデータが変更されました:');
-        notifyClients({ action: 'reload', source: 'checkout' }); // どのモデルかを指定
-    });
 });
 
 // flashの設定

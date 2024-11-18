@@ -9,7 +9,7 @@
     color: rgb(255, 232, 230) !important;
     /* White text */
     transition: color 0.3s ease;
-    font-size: calc(0.75rem + 0.1vw);
+    font-size: calc(0.9rem + 0.1vw);
 }
 
 .navbar-dark .nav-link.active {
