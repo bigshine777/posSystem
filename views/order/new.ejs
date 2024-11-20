@@ -36,9 +36,9 @@
       <!-- 料理セクション -->
       <div class="mb-3">
         <h3 class="section-title">料理</h3>
-        <% if (setProducts.length) { %>
+        <% if (foodProducts.length) { %>
         <div class="row">
-          <% for (let foodProduct of setProducts) { %>
+          <% for (let foodProduct of foodProducts) { %>
           <% if(foodProduct.name === 'ハーフ&ハーフ'){continue;} %>
           <div class="col-lg-3 col-md-4 col-6 mb-4">
             <div class="card product-card h-100 shadow-sm">
