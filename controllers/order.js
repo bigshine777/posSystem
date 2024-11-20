@@ -19,9 +19,10 @@ exports.create = async (req, res) => {
     try {
         const foodProducts = await Product.find({ category: 'food' });
         const drinkProducts = await Product.find({ category: 'drink' });
+        const setProducts = await Product.find({ category: 'set' });
         const otherProducts = await Product.find({ category: 'others' });
 
-        res.render('order/new', { foodProducts, drinkProducts, otherProducts });
+        res.render('order/new', { foodProducts, drinkProducts, otherProducts, setProducts });
     } catch (error) {
         req.flash('error', '商品の取得中にエラーが発生しました。');
         res.redirect('/order');
@@ -117,7 +118,7 @@ exports.toggleIsServed = async (req, res) => {
     } catch (error) {
         console.error('Error toggling order status:', error);
         req.flash('error', 'エラーが発生しました。');
-        res.redirect(`/order`); 
+        res.redirect(`/order`);
     }
 };
 
