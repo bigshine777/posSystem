@@ -48,6 +48,7 @@ exports.edit = async (req, res) => {
     try {
         const foodProducts = await Product.find({ category: 'food' });
         const drinkProducts = await Product.find({ category: 'drink' });
+        const setProducts = await Product.find({ category: 'set' });
         const otherProducts = await Product.find({ category: 'others' });
 
         const { id } = req.params;
@@ -58,7 +59,7 @@ exports.edit = async (req, res) => {
             return res.redirect('/order');
         }
 
-        res.render('order/edit', { order, foodProducts, drinkProducts, otherProducts });
+        res.render('order/edit', { order, foodProducts, drinkProducts, setProducts, otherProducts });
     } catch (error) {
         req.flash('error', '注文の取得中にエラーが発生しました。');
         res.redirect('/order');

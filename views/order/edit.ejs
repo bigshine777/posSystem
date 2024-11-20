@@ -8,6 +8,39 @@
       <div class="mb-3">
         <h3 class="section-title">注文卓を変更</h3>
         <%- include('../partials/table') %>
+      </div> 
+      
+      <div class="mb-3">
+        <h3 class="section-title">セット</h3>
+        <% if (setProducts.length) { %>
+        <div class="row">
+          <% for (let setProduct of setProducts) { %>
+          <div class="col-lg-3 col-md-4 col-6 mb-4">
+            <div class="card product-card h-100 shadow-sm">
+              <div class="card-body text-center">
+                <h5 class="card-title"><%= setProduct.name %></h5>
+                <p class="card-text price-text">¥ <%= setProduct.price %></p>
+
+                <div class="quantity-controller" data-product-name="<%= setProduct.name %>" data-product-id="<%= setProduct._id %>" data-product-price="<%= setProduct.price %>">
+                  <button class="minus-btn btn btn-sm btn-outline-secondary">-</button>
+                  <span class="quantity">
+                    <% let quantity = 0; %>
+                    <% for (let orderProduct of order.products) { %>
+                    <% if (orderProduct.product._id.toString() === setProduct._id.toString()) { %>
+                    <% quantity = parseInt(orderProduct.quantity, 10); %>
+                    <% } %>
+                    <% } %>
+                    <%= quantity %>
+                  </span>
+                  <button class="plus-btn btn btn-sm btn-outline-secondary">+</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
       </div>
 
       <!-- 料理セクション -->
